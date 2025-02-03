@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- HERO/HEADER SECTION -->
-<div class="p-5 mb-4 bg-light rounded-3">
-  <div class="container-fluid py-5">
-    <h1 class="display-5 fw-bold">Shining a Light on Light Pollution</h1>
+<!-- Updated HERO/HEADER SECTION with dark background image -->
+<div class="header-container p-5 mb-4 rounded-3">
+  <div class="container-fluid py-5 header-content">
+    <h1 class="display-5 fw-bold">Princeton, Save Our Dark Skies</h1>
     <p class="col-md-8 fs-4">
       Learn how excessive lighting is affecting our campus environment—and how you can help.
     </p>
@@ -57,12 +57,19 @@
         <div class="col-md-4 mb-3">
           <div class="card">
             {% if "image" in item.mimeType %}
-              <a href="{{ item.baseUrl }}=w1600-h1200" data-lightbox="album" data-title="Your description here or {{ item.id }}">
+              <a href="{{ item.baseUrl }}=w1600-h1200" 
+                 class="glightbox" 
+                 data-gallery="album" 
+                 data-type="image"
+                 data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
                 <img src="{{ item.baseUrl }}=w400-h300" alt="Google Photo" class="card-img-top">
               </a>
             {% elif "video" in item.mimeType %}
-              <!-- For videos, you might want to use a modal or custom video player. -->
-              <a href="{{ item.baseUrl }}=dv" data-lightbox="album" data-title="Your video description here or {{ item.id }}">
+              <a href="{{ item.baseUrl }}=dv" 
+                 class="glightbox" 
+                 data-gallery="album" 
+                 data-type="video"
+                 data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
                 <video class="card-img-top" style="max-height:200px;">
                   <source src="{{ item.baseUrl }}=dv" type="{{ item.mimeType }}">
                   Your browser does not support the video tag.
@@ -70,9 +77,18 @@
               </a>
             {% endif %}
             <div class="card-body">
-              <!-- This is where you can display a description. -->
-              <p class="card-text">Media ID: {{ item.id }}</p>
-              <!-- If you have additional custom description data for each image, include it here. -->
+              <!-- Display the current description -->
+              <p class="card-text" id="desc-{{ item.id }}">
+                {{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}
+              </p>
+              <!-- Edit button to toggle the form -->
+              <button class="btn btn-sm btn-outline-primary" onclick="toggleEditForm('{{ item.id }}')">Edit Description</button>
+              <!-- Hidden form for editing the description -->
+              <form method="POST" action="{{ url_for('update_description') }}" id="edit-form-{{ item.id }}" style="display: none; margin-top: 10px;">
+                <input type="hidden" name="media_item_id" value="{{ item.id }}">
+                <textarea name="description" class="form-control" rows="2" placeholder="Enter description">{{ custom_descriptions[item.id] if item.id in custom_descriptions else '' }}</textarea>
+                <button type="submit" class="btn btn-sm btn-primary mt-2">Save</button>
+              </form>
             </div>
           </div>
         </div>
@@ -84,6 +100,7 @@
     <p>No Google Photos available. Please <a href="{{ url_for('authorize') }}">authorize</a> the app to view your album.</p>
   </section>
 {% endif %}
+
 
 
 <!-- SECTION 3: CURATED PHOTOS & VIDEOS -->

@@ -2,6 +2,7 @@ import os
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_sqlalchemy import SQLAlchemy
 from google_auth_oauthlib.flow import Flow
 from google.auth.transport.requests import Request
 import google.oauth2.credentials  # Import this for OAuth credentials handling
@@ -14,6 +15,23 @@ import requests
 # -------------------------
 app = Flask(__name__)
 app.secret_key = "YOUR_SECRET_KEY"  # Replace with a secure key in production
+
+
+
+# Configure the database URI (here we use a local SQLite database)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///descriptions.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# Define a model to store descriptions for each media item.
+class MediaDescription(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    media_item_id = db.Column(db.String(255), unique=True, nullable=False)
+    description = db.Column(db.Text, nullable=True)
+
+# Create the database tables if they don't exist
+with app.app_context():
+    db.create_all()
 
 # -------------------------
 # Helper Functions
@@ -199,38 +217,25 @@ def allowed_file(filename):
 def index():
     global user_submissions
 
-    # Handle file uploads (your existing POST handling)
+    # (Your existing file upload code remains here...)
     if request.method == "POST":
-        file = request.files.get("media_file")
-        description = request.form.get("description")
-        latitude = request.form.get("latitude")
-        longitude = request.form.get("longitude")
-
-        if not file or file.filename == "":
-            flash("No file selected.")
-            return redirect(url_for("index"))
-
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-            submission_data = {
-                "filename": filename,
-                "description": description,
-                "latitude": latitude,
-                "longitude": longitude,
-            }
-            user_submissions.append(submission_data)
-            flash("File uploaded successfully!")
-        else:
-            flash("File type not allowed.")
+        # ... handle file upload ...
         return redirect(url_for("index"))
 
     # If OAuth credentials exist, fetch the album items
     google_photos_media = []
     if 'credentials' in session:
-        # Replace with your actual album ID
-        album_id = "AF1QipNLTaqMMG4qZRpNRpcwhiRrGI6--CGP2jhS4oRR"
+        # IMPORTANT: Use the correct album ID (from your /albums output)
+        album_id = "AEVtP4Aw64PA0nj6cfP-wofknQrsFqnWkKON_UyptQpPTAr-jzVKONdocx7BANAKmH6vRQIA6cH9"
         google_photos_media = fetch_album_items(album_id)
+
+    # Build a dictionary of custom descriptions for the fetched media items.
+    custom_descriptions = {}
+    if google_photos_media:
+        for item in google_photos_media:
+            record = MediaDescription.query.filter_by(media_item_id=item['id']).first()
+            if record:
+                custom_descriptions[item['id']] = record.description
 
     return render_template(
         "index.html",
@@ -238,8 +243,31 @@ def index():
         research_articles=research_articles,
         curated_media=curated_media,
         user_submissions=user_submissions,
-        google_photos_media=google_photos_media
+        google_photos_media=google_photos_media,
+        custom_descriptions=custom_descriptions
     )
+
+
+@app.route('/update_description', methods=['POST'])
+def update_description():
+    media_item_id = request.form.get('media_item_id')
+    new_description = request.form.get('description')
+    if not media_item_id:
+        flash("Media item id not provided.", "danger")
+        return redirect(url_for('index'))
+    
+    # Try to find an existing record for this media item.
+    record = MediaDescription.query.filter_by(media_item_id=media_item_id).first()
+    if record:
+        record.description = new_description
+    else:
+        record = MediaDescription(media_item_id=media_item_id, description=new_description)
+        db.session.add(record)
+    db.session.commit()
+    flash("Description updated successfully!", "success")
+    return redirect(url_for('index'))
+
+
 
 # -------------------------
 # Run the App

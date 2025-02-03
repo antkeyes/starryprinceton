@@ -1,0 +1,110 @@
+/* Define CSS variables for the dark theme */
+:root {
+  --bg-color: #121212;           /* Very dark background */
+  --text-color: #e0e0e0;           /* Light text */
+  --accent-color: #bb86fc;         /* Accent color (purple) */
+  --card-bg: #1e1e1e;             /* Card background */
+  --card-border: #333333;         /* Card border */
+  --navbar-bg: #1f1f1f;           /* Navbar background */
+  --link-color: #bb86fc;          /* Link color */
+  --link-hover: #d6aefc;           /* Link hover color */
+}
+
+/* Global styles */
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Links */
+a {
+  color: var(--link-color);
+}
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+/* Navbar adjustments */
+.navbar {
+  background-color: var(--navbar-bg) !important;
+}
+.navbar-brand, .navbar-nav .nav-link {
+  color: var(--text-color) !important;
+}
+
+/* New header container styling for a dark background image */
+.header-container {
+  background-image: url("/static/images/banner.PNG");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* Optional: Add an overlay effect for better text readability */
+  position: relative;
+  color: #F8B525; /* Light text color */
+  overflow: hidden;
+}
+
+/* Optional: Create an overlay if the image is too busy */
+.header-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* adjust opacity as needed */
+  z-index: 1;
+}
+
+/* Ensure that the text inside the header appears above the overlay */
+.header-container .header-content {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* Card styles */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-color);
+}
+.card-body {
+  color: var(--text-color);
+}
+
+/* Override Bootstrap’s default button styles */
+.btn-primary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+.btn-primary:hover {
+  background-color: var(--link-hover);
+  border-color: var(--link-hover);
+}
+
+/* GLightbox caption adjustments (if using GLightbox) */
+.glightbox-container .gdesc {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  text-align: center;
+  font-size: 1.2em;
+  z-index: 9999;
+}
+
+/* Optional: Style form inputs and buttons for dark mode */
+.form-control {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  color: var(--text-color);
+}
+.form-control::placeholder {
+  color: #888;
+}
