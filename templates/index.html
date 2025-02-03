@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- Updated HERO/HEADER SECTION with dark background image -->
-<div class="header-container p-5 mb-4 rounded-3">
-  <div class="container-fluid py-5 header-content">
+<!-- HERO/HEADER SECTION (Now using new class names) -->
+<div class="hero-banner p-5 mb-4 rounded-3">
+  <div class="container-fluid py-5 hero-text">
     <h1 class="display-5 fw-bold">Princeton, Save Our Dark Skies</h1>
     <p class="col-md-8 fs-4">
       Learn how excessive lighting is affecting our campus environment—and how you can help.
@@ -11,94 +11,89 @@
   </div>
 </div>
 
-<!-- SECTION 1: TESTIMONIALS -->
+<!-- SECTION: TESTIMONIALS (CSV-Based) -->
 <section id="testimonials" class="mb-5">
   <h2>Student & Faculty Testimonials</h2>
-  <div class="row">
-    {% for t in testimonials %}
-      <div class="col-md-6 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <blockquote class="blockquote mb-0">
-              <p>"{{ t.quote }}"</p>
-              <footer class="blockquote-footer">{{ t.name }}</footer>
-            </blockquote>
-          </div>
-        </div>
+  <div class="testimonials-box">
+    <!-- Fixed header for question titles -->
+    <div class="testimonials-titles">
+      <div class="titles-row">
+        <div class="testimonial-title">{{ q1_header }}</div>
+        <div class="testimonial-title">{{ q2_header }}</div>
       </div>
-    {% endfor %}
+    </div>
+    <!-- Scrollable content with student responses -->
+    <div class="testimonials-content">
+      {% for row in csv_rows %}
+        {% set q1_response = row[q1_header]|trim %}
+        {% set q2_response = row[q2_header]|trim %}
+        {% if q1_response or q2_response %}
+          <div class="testimonial-row">
+            <!-- Left column (Question 1 response) -->
+            <div class="testimonial-column">
+              <p>{{ q1_response }}</p>
+            </div>
+            <!-- Right column (Question 2 response) -->
+            <div class="testimonial-column">
+              <p>{{ q2_response }}</p>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 </section>
 
-<!-- SECTION 2: SCIENTIFIC & NEWS ARTICLES -->
-<section id="research" class="mb-5">
-  <h2>Research & News Articles</h2>
-  <div class="list-group">
-    {% for article in research_articles %}
-    <a
-      href="{{ article.link }}"
-      class="list-group-item list-group-item-action"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <h5 class="mb-1">{{ article.title }}</h5>
-      <p class="mb-1">{{ article.summary }}</p>
-    </a>
-    {% endfor %}
-  </div>
-</section>
 
 <!-- SECTION: Google Photos Album -->
 {% if google_photos_media %}
-  <section id="google-photos" class="mb-5">
-    <h2>Google Photos Album</h2>
-    <div class="row">
-      {% for item in google_photos_media %}
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            {% if "image" in item.mimeType %}
-              <a href="{{ item.baseUrl }}=w1600-h1200" 
-                 class="glightbox" 
-                 data-gallery="album" 
-                 data-type="image"
-                 data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
-                <img src="{{ item.baseUrl }}=w400-h300" alt="Google Photo" class="card-img-top">
-              </a>
-            {% elif "video" in item.mimeType %}
-              <a href="{{ item.baseUrl }}=dv" 
-                 class="glightbox" 
-                 data-gallery="album" 
-                 data-type="video"
-                 data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
-                <video class="card-img-top" style="max-height:200px;">
-                  <source src="{{ item.baseUrl }}=dv" type="{{ item.mimeType }}">
-                  Your browser does not support the video tag.
-                </video>
-              </a>
-            {% endif %}
-            <div class="card-body">
-              <!-- Display the current description -->
-              <p class="card-text" id="desc-{{ item.id }}">
-                {{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}
-              </p>
-              <!-- Edit button to toggle the form -->
-              <button class="btn btn-sm btn-outline-primary" onclick="toggleEditForm('{{ item.id }}')">Edit Description</button>
-              <!-- Hidden form for editing the description -->
-              <form method="POST" action="{{ url_for('update_description') }}" id="edit-form-{{ item.id }}" style="display: none; margin-top: 10px;">
-                <input type="hidden" name="media_item_id" value="{{ item.id }}">
-                <textarea name="description" class="form-control" rows="2" placeholder="Enter description">{{ custom_descriptions[item.id] if item.id in custom_descriptions else '' }}</textarea>
-                <button type="submit" class="btn btn-sm btn-primary mt-2">Save</button>
-              </form>
-            </div>
-          </div>
+<section id="google-photos" class="mb-5">
+  <h2>Google Photos Album</h2>
+  <div class="row">
+    {% for item in google_photos_media %}
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        {% if "image" in item.mimeType %}
+        <a href="{{ item.baseUrl }}=w1600-h1200" class="glightbox" data-gallery="album" data-type="image"
+          data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
+          <img src="{{ item.baseUrl }}=w400-h300" alt="Google Photo" class="card-img-top">
+        </a>
+        {% elif "video" in item.mimeType %}
+        <a href="{{ item.baseUrl }}=dv" class="glightbox" data-gallery="album" data-type="video"
+          data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
+          <video class="card-img-top" style="max-height:200px;">
+            <source src="{{ item.baseUrl }}=dv" type="{{ item.mimeType }}">
+            Your browser does not support the video tag.
+          </video>
+        </a>
+        {% endif %}
+        <div class="card-body">
+          <!-- Display the current description -->
+          <p class="card-text" id="desc-{{ item.id }}">
+            {{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}
+          </p>
+          <!-- Edit button to toggle the form -->
+          <button class="btn btn-sm btn-outline-primary" onclick="toggleEditForm('{{ item.id }}')">Edit
+            Description</button>
+          <!-- Hidden form for editing the description -->
+          <form method="POST" action="{{ url_for('update_description') }}" id="edit-form-{{ item.id }}"
+            style="display: none; margin-top: 10px;">
+            <input type="hidden" name="media_item_id" value="{{ item.id }}">
+            <textarea name="description" class="form-control" rows="2"
+              placeholder="Enter description">{{ custom_descriptions[item.id] if item.id in custom_descriptions else '' }}</textarea>
+            <button type="submit" class="btn btn-sm btn-primary mt-2">Save</button>
+          </form>
         </div>
-      {% endfor %}
+      </div>
     </div>
-  </section>
+    {% endfor %}
+  </div>
+</section>
 {% else %}
-  <section id="google-photos">
-    <p>No Google Photos available. Please <a href="{{ url_for('authorize') }}">authorize</a> the app to view your album.</p>
-  </section>
+<section id="google-photos">
+  <p>No Google Photos available. Please <a href="{{ url_for('authorize') }}">authorize</a> the app to view your album.
+  </p>
+</section>
 {% endif %}
 
 
@@ -108,28 +103,21 @@
   <h2>Curated Campus Media</h2>
   <div class="row">
     {% for media in curated_media %}
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          {% if media.type == "image" %}
-            <img
-              src="{{ media.src }}"
-              class="card-img-top"
-              alt="Curated campus media"
-            >
-          {% elif media.type == "video" %}
-            <video
-              controls
-              class="w-100"
-            >
-              <source src="{{ media.src }}" type="video/mp4">
-              Your browser does not support HTML5 video.
-            </video>
-          {% endif %}
-          <div class="card-body">
-            <p class="card-text">{{ media.description }}</p>
-          </div>
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        {% if media.type == "image" %}
+        <img src="{{ media.src }}" class="card-img-top" alt="Curated campus media">
+        {% elif media.type == "video" %}
+        <video controls class="w-100">
+          <source src="{{ media.src }}" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+        {% endif %}
+        <div class="card-body">
+          <p class="card-text">{{ media.description }}</p>
         </div>
       </div>
+    </div>
     {% endfor %}
   </div>
 </section>
@@ -151,47 +139,25 @@
 
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <input
-        type="text"
-        class="form-control"
-        id="description"
-        name="description"
-        placeholder="Describe the image/video and where it was taken"
-        required
-      >
+      <input type="text" class="form-control" id="description" name="description"
+        placeholder="Describe the image/video and where it was taken" required>
     </div>
 
     <!-- Map Coordinates (Optional) -->
     <div class="mb-3">
       <label for="latitude" class="form-label">Latitude</label>
-      <input
-        type="text"
-        class="form-control"
-        id="latitude"
-        name="latitude"
-        placeholder="(Optional) e.g., 40.7128"
-      >
+      <input type="text" class="form-control" id="latitude" name="latitude" placeholder="(Optional) e.g., 40.7128">
     </div>
     <div class="mb-3">
       <label for="longitude" class="form-label">Longitude</label>
-      <input
-        type="text"
-        class="form-control"
-        id="longitude"
-        name="longitude"
-        placeholder="(Optional) e.g., -74.0060"
-      >
+      <input type="text" class="form-control" id="longitude" name="longitude" placeholder="(Optional) e.g., -74.0060">
     </div>
 
     <!-- A button to get user location (requires JavaScript) -->
-    <button
-      type="button"
-      class="btn btn-secondary mb-3"
-      onclick="getLocation()"
-    >
+    <button type="button" class="btn btn-secondary mb-3" onclick="getLocation()">
       Use My Current Location
     </button>
-    <br/>
+    <br />
 
     <button type="submit" class="btn btn-primary">Upload</button>
   </form>
@@ -200,42 +166,33 @@
   <h3>Recent Submissions</h3>
   <div class="row">
     {% for submission in user_submissions %}
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          <!-- Check if file is likely an image vs. a video by extension -->
-          {% set ext = submission.filename.split('.')[-1].lower() %}
-          {% if ext in ['png', 'jpg', 'jpeg', 'gif'] %}
-            <img
-              src="{{ url_for('static', filename='../../uploads/' ~ submission.filename) }}"
-              class="card-img-top"
-              alt="User submitted"
-            >
-          {% elif ext in ['mp4', 'mov', 'avi'] %}
-            <video controls class="w-100">
-              <source
-                src="{{ url_for('static', filename='../../uploads/' ~ submission.filename) }}"
-                type="video/mp4"
-              >
-              Your browser does not support HTML5 video.
-            </video>
-          {% else %}
-            <img
-              src="https://via.placeholder.com/300x200?text=File+Preview+Unavailable"
-              class="card-img-top"
-              alt="Unavailable"
-            >
+    <div class="col-md-4 mb-3">
+      <div class="card">
+        <!-- Check if file is likely an image vs. a video by extension -->
+        {% set ext = submission.filename.split('.')[-1].lower() %}
+        {% if ext in ['png', 'jpg', 'jpeg', 'gif'] %}
+        <img src="{{ url_for('static', filename='../../uploads/' ~ submission.filename) }}" class="card-img-top"
+          alt="User submitted">
+        {% elif ext in ['mp4', 'mov', 'avi'] %}
+        <video controls class="w-100">
+          <source src="{{ url_for('static', filename='../../uploads/' ~ submission.filename) }}" type="video/mp4">
+          Your browser does not support HTML5 video.
+        </video>
+        {% else %}
+        <img src="https://via.placeholder.com/300x200?text=File+Preview+Unavailable" class="card-img-top"
+          alt="Unavailable">
+        {% endif %}
+        <div class="card-body">
+          <p><strong>Description:</strong> {{ submission.description }}</p>
+          {% if submission.latitude and submission.longitude %}
+          <p>
+            <strong>Coordinates:</strong>
+            {{ submission.latitude }}, {{ submission.longitude }}
+          </p>
           {% endif %}
-          <div class="card-body">
-            <p><strong>Description:</strong> {{ submission.description }}</p>
-            {% if submission.latitude and submission.longitude %}
-              <p>
-                <strong>Coordinates:</strong>
-                {{ submission.latitude }}, {{ submission.longitude }}
-              </p>
-            {% endif %}
-          </div>
         </div>
       </div>
+    </div>
     {% endfor %}
   </div>
 

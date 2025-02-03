@@ -9,6 +9,7 @@ import google.oauth2.credentials  # Import this for OAuth credentials handling
 from werkzeug.utils import secure_filename
 import json
 import requests
+import csv
 
 # -------------------------
 # Define the Flask App
@@ -217,9 +218,9 @@ def allowed_file(filename):
 def index():
     global user_submissions
 
-    # (Your existing file upload code remains here...)
+    # Handle file uploads (your existing POST handling code)
     if request.method == "POST":
-        # ... handle file upload ...
+        # ... your file upload code here ...
         return redirect(url_for("index"))
 
     # If OAuth credentials exist, fetch the album items
@@ -237,15 +238,34 @@ def index():
             if record:
                 custom_descriptions[item['id']] = record.description
 
+    # ---- Add CSV reading for testimonials here ----
+    import csv
+    csv_file = os.path.join(app.root_path, 'testimonies.csv')
+    csv_rows = []
+    q1_header = "Do you see a value in Princeton having a starry sky?  Describe your relevant experience. "
+    q2_header = "Did you experience light pollution on campus, and how did it disturb you? (Please give details)."
+    try:
+        with open(csv_file, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                csv_rows.append(row)
+    except Exception as e:
+        print("Error reading CSV file:", e)
+    # ------------------------------------------------
+
     return render_template(
         "index.html",
-        testimonials=testimonials,
+        testimonials=testimonials,  # existing sample data if you still need it
         research_articles=research_articles,
         curated_media=curated_media,
         user_submissions=user_submissions,
         google_photos_media=google_photos_media,
-        custom_descriptions=custom_descriptions
+        custom_descriptions=custom_descriptions,
+        csv_rows=csv_rows,      # pass the CSV rows
+        q1_header=q1_header,    # pass the header for question 1
+        q2_header=q2_header     # pass the header for question 2
     )
+
 
 
 @app.route('/update_description', methods=['POST'])
