@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HERO/HEADER SECTION -->
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Shining a Light on Light Pollution</h1>
+    <p class="col-md-8 fs-4">
+      Learn how excessive lighting is affecting our campus environment—and how you can help.
+    </p>
+  </div>
+</div>
+
+<!-- SECTION 1: TESTIMONIALS -->
+<section id="testimonials" class="mb-5">
+  <h2>Student & Faculty Testimonials</h2>
+  <div class="row">
+    {% for t in testimonials %}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <blockquote class="blockquote mb-0">
+              <p>"{{ t.quote }}"</p>
+              <footer class="blockquote-footer">{{ t.name }}</footer>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- SECTION 2: SCIENTIFIC & NEWS ARTICLES -->
+<section id="research" class="mb-5">
+  <h2>Research & News Articles</h2>
+  <div class="list-group">
+    {% for article in research_articles %}
+    <a
+      href="{{ article.link }}"
+      class="list-group-item list-group-item-action"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <h5 class="mb-1">{{ article.title }}</h5>
+      <p class="mb-1">{{ article.summary }}</p>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- SECTION: Google Photos Album -->
+{% if google_photos_media %}
+  <section id="google-photos" class="mb-5">
+    <h2>Google Photos Album</h2>
+    <div class="row">
+      {% for item in google_photos_media %}
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            {% if "image" in item.mimeType %}
+              <a href="{{ item.baseUrl }}=w1600-h1200" data-lightbox="album" data-title="Your description here or {{ item.id }}">
+                <img src="{{ item.baseUrl }}=w400-h300" alt="Google Photo" class="card-img-top">
+              </a>
+            {% elif "video" in item.mimeType %}
+              <!-- For videos, you might want to use a modal or custom video player. -->
+              <a href="{{ item.baseUrl }}=dv" data-lightbox="album" data-title="Your video description here or {{ item.id }}">
+                <video class="card-img-top" style="max-height:200px;">
+                  <source src="{{ item.baseUrl }}=dv" type="{{ item.mimeType }}">
+                  Your browser does not support the video tag.
+                </video>
+              </a>
+            {% endif %}
+            <div class="card-body">
+              <!-- This is where you can display a description. -->
+              <p class="card-text">Media ID: {{ item.id }}</p>
+              <!-- If you have additional custom description data for each image, include it here. -->
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% else %}
+  <section id="google-photos">
+    <p>No Google Photos available. Please <a href="{{ url_for('authorize') }}">authorize</a> the app to view your album.</p>
+  </section>
+{% endif %}
+
+
+<!-- SECTION 3: CURATED PHOTOS & VIDEOS -->
+<section id="curated-media" class="mb-5">
+  <h2>Curated Campus Media</h2>
+  <div class="row">
+    {% for media in curated_media %}
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          {% if media.type == "image" %}
+            <img
+              src="{{ media.src }}"
+              class="card-img-top"
+              alt="Curated campus media"
+            >
+          {% elif media.type == "video" %}
+            <video
+              controls
+              class="w-100"
+            >
+              <source src="{{ media.src }}" type="video/mp4">
+              Your browser does not support HTML5 video.
+            </video>
+          {% endif %}
+          <div class="card-body">
+            <p class="card-text">{{ media.description }}</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- SECTION 4: USER SUBMISSIONS (Upload Form & Display) -->
+<section id="user-submissions" class="mb-5">
+  <h2>Share Your Photos & Videos</h2>
+  <p>
+    Help us document light pollution on campus by uploading your own photos or videos
+    and tagging their location.
+  </p>
+
+  <!-- Upload Form -->
+  <form action="{{ url_for('index') }}" method="POST" enctype="multipart/form-data" class="mb-4">
+    <div class="mb-3">
+      <label for="media_file" class="form-label">Select File</label>
+      <input class="form-control" type="file" id="media_file" name="media_file" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="description"
+        placeholder="Describe the image/video and where it was taken"
+        required
+      >
+    </div>
+
+    <!-- Map Coordinates (Optional) -->
+    <div class="mb-3">
+      <label for="latitude" class="form-label">Latitude</label>
+      <input
+        type="text"
+        class="form-control"
+        id="latitude"
+        name="latitude"
+        placeholder="(Optional) e.g., 40.7128"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="longitude" class="form-label">Longitude</label>
+      <input
+        type="text"
+        class="form-control"
+        id="longitude"
+        name="longitude"
+        placeholder="(Optional) e.g., -74.0060"
+      >
+    </div>
+
+    <!-- A button to get user location (requires JavaScript) -->
+    <button
+      type="button"
+      class="btn btn-secondary mb-3"
+      onclick="getLocation()"
+    >
+      Use My Current Location
+    </button>
+    <br/>
+
+    <button type="submit" class="btn btn-primary">Upload</button>
+  </form>
+
+  <!-- Display User Submissions -->
+  <h3>Recent Submissions</h3>
+  <div class="row">
+    {% for submission in user_submissions %}
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <!-- Check if file is likely an image vs. a video by extension -->
+          {% set ext = submission.filename.split('.')[-1].lower() %}
+          {% if ext in ['png', 'jpg', 'jpeg', 'gif'] %}
+            <img
+              src="{{ url_for('static', filename='../../uploads/' ~ submission.filename) }}"
+              class="card-img-top"
+              alt="User submitted"
+            >
+          {% elif ext in ['mp4', 'mov', 'avi'] %}
+            <video controls class="w-100">
+              <source
+                src="{{ url_for('static', filename='../../uploads/' ~ submission.filename) }}"
+                type="video/mp4"
+              >
+              Your browser does not support HTML5 video.
+            </video>
+          {% else %}
+            <img
+              src="https://via.placeholder.com/300x200?text=File+Preview+Unavailable"
+              class="card-img-top"
+              alt="Unavailable"
+            >
+          {% endif %}
+          <div class="card-body">
+            <p><strong>Description:</strong> {{ submission.description }}</p>
+            {% if submission.latitude and submission.longitude %}
+              <p>
+                <strong>Coordinates:</strong>
+                {{ submission.latitude }}, {{ submission.longitude }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</section>
+
+{% endblock %}
