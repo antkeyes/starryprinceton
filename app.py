@@ -104,6 +104,16 @@ class MediaDescription(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     media_item_id = db.Column(db.String(255), unique=True, nullable=False)
     description = db.Column(db.Text, nullable=True)
+    
+# Define a model for user submissions.
+class Submission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    user_name = db.Column(db.String(100))  # Optional: user’s name
+    latitude = db.Column(db.String(50))    # Could be Numeric if you prefer precision
+    longitude = db.Column(db.String(50))
+    # You can add additional fields as needed.
 
 # Create the database tables if they don't exist
 with app.app_context():
@@ -247,7 +257,7 @@ def fetch_album_items(album_id):
 # -------------------------
 # Configuration and Sample Data
 # -------------------------
-UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "uploads")
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "mp4", "mov", "avi"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16 MB max upload size (example)
@@ -291,21 +301,39 @@ def allowed_file(filename):
 # -------------------------
 @app.route("/", methods=["GET", "POST"])
 def index():
-    global user_submissions
-
-    # Handle file uploads (your existing POST handling code)
+    # POST handling for file uploads
     if request.method == "POST":
-        # ... your file upload code here ...
+        file = request.files.get("media_file")
+        description = request.form.get("description")
+        user_name = request.form.get("user_name")
+        latitude = request.form.get("latitude")
+        longitude = request.form.get("longitude")
+        
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            
+            new_submission = Submission(
+                filename=filename,
+                description=description,
+                user_name=user_name,
+                latitude=latitude,
+                longitude=longitude
+            )
+            db.session.add(new_submission)
+            db.session.commit()
+            flash("Your submission has been uploaded!", "success")
+        else:
+            flash("Invalid file type.", "error")
+            
         return redirect(url_for("index"))
-
-    # If OAuth credentials exist, fetch the album items
+    
+    # GET handling
     google_photos_media = []
     if 'credentials' in session:
-        # IMPORTANT: Use the correct album ID (from your /albums output)
         album_id = "AEVtP4Aw64PA0nj6cfP-wofknQrsFqnWkKON_UyptQpPTAr-jzVKONdocx7BANAKmH6vRQIA6cH9"
         google_photos_media = fetch_album_items(album_id)
 
-    # Build a dictionary of custom descriptions for the fetched media items.
     custom_descriptions = {}
     if google_photos_media:
         for item in google_photos_media:
@@ -313,39 +341,34 @@ def index():
             if record:
                 custom_descriptions[item['id']] = record.description
 
-    # ---- Parse your CSV for testimonials ----
+    # Query the database for all user submissions
+    submissions = Submission.query.all()
+
+    # Parse testimonials from CSV (existing code)
     import csv
     csv_file = os.path.join(app.root_path, 'testimonies.csv')
-
-    # These must match the EXACT column headers in your CSV
     name_col = "Firstname, Lastname (Can say Anonymous, but there isn't much point in hiding your name). "
     year_col = "(Anticipated) Year of graduation"
     q1_col = "Do you see a value in Princeton having a starry sky?"
     q2_col = "Did you experience light pollution on campus, and how did it disturb you?"
-
-    csv_testimonies = []  # We'll store processed data for each row here
-
+    csv_testimonies = []
     try:
         with open(csv_file, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                # Extract each field
                 full_name = row.get(name_col, "").strip()
                 grad_year = row.get(year_col, "").strip()
                 q1_answer = row.get(q1_col, "").strip()
                 q2_answer = row.get(q2_col, "").strip()
 
-                # Convert "Adriana Gaitan" -> "Adriana G."
                 split_name = full_name.split()
                 if len(split_name) >= 2:
                     first_name = split_name[0]
-                    last_initial = split_name[-1][0] + "."  # first letter of last word + "."
+                    last_initial = split_name[-1][0] + "."
                 else:
-                    # If only one part, treat it as the entire name
                     first_name = full_name
                     last_initial = ""
 
-                # Build a dict for the template
                 testimony_dict = {
                     "first_name": first_name,
                     "last_initial": last_initial,
@@ -356,20 +379,19 @@ def index():
                 csv_testimonies.append(testimony_dict)
     except Exception as e:
         print("Error reading CSV file:", e)
-        csv_testimonies = []  # fallback if error
+        csv_testimonies = []
 
-    # ------------------------------------------------
-    # Now render the template, passing 'csv_testimonies'
     return render_template(
         "index.html",
-        testimonials=testimonials,  # existing sample data if you still need it
+        testimonials=testimonials,
         research_articles=research_articles,
         curated_media=curated_media,
-        user_submissions=user_submissions,
+        user_submissions=submissions,  # Use the submissions queried from the DB
         google_photos_media=google_photos_media,
         custom_descriptions=custom_descriptions,
-        csv_testimonies=csv_testimonies  # pass new list
+        csv_testimonies=csv_testimonies
     )
+
 
 # -------------------------
 # Run the App

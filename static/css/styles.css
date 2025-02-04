@@ -44,6 +44,7 @@ a:hover {
   position: relative;
   color: #F8B525;
   overflow: hidden;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
 .hero-banner::before {
   content: "";
@@ -80,6 +81,7 @@ a:hover {
   box-sizing: border-box;
   margin: 40px 0px 20px;           /* Top margin allows space for the overlapping logo */
   padding: 0 10px 10px 10px;        /* Horizontal & bottom padding; top space is provided by header */
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
 
 /* Logo circle that overlaps the card top */
@@ -221,6 +223,7 @@ a:hover {
   display: flex;         
   align-items: center;    
   justify-content: center;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
 
 .swiper-navigation .swiper-button-prev:hover,
@@ -328,6 +331,7 @@ a:hover {
   background-color: #7C86E7;  /* A slightly darker shade for the hover state */
   border-color: var(--card-border);
   text-decoration: none;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
 
 
@@ -380,3 +384,19 @@ a:hover {
 .form-control::placeholder {
   color: #888;
 }
+
+
+
+/* --------------------------------------------------
+   user submissions
+-------------------------------------------------- */
+.user-submission-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-top: 3px solid #626EE3; /* or any accent color */
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+  margin: 20px 0;
+  overflow: hidden;
+}
+
