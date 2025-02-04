@@ -11,38 +11,68 @@
   </div>
 </div>
 
-<!-- SECTION: TESTIMONIALS (CSV-Based) -->
+<!-- student testimonials -->
 <section id="testimonials" class="mb-5">
-  <h2>Student & Faculty Testimonials</h2>
-  <div class="testimonials-box">
-    <!-- Fixed header for question titles -->
-    <div class="testimonials-titles">
-      <div class="titles-row">
-        <div class="testimonial-title">{{ q1_header }}</div>
-        <div class="testimonial-title">{{ q2_header }}</div>
-      </div>
-    </div>
-    <!-- Scrollable content with student responses -->
-    <div class="testimonials-content">
-      {% for row in csv_rows %}
-        {% set q1_response = row[q1_header]|trim %}
-        {% set q2_response = row[q2_header]|trim %}
-        {% if q1_response or q2_response %}
-          <div class="testimonial-row">
-            <!-- Left column (Question 1 response) -->
-            <div class="testimonial-column">
-              <p>{{ q1_response }}</p>
+  <h2>Student Testimonials</h2>
+  <!-- Parent container to control overall slider width -->
+  <div class="swiper-parent">
+    <!-- Swiper container -->
+    <div class="swiper-container testimonials-carousel">
+      <div class="swiper-wrapper">
+        {% for testimony in csv_testimonies %}
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <!-- Logo circle -->
+            <div class="testimonial-logo">
+              <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
             </div>
-            <!-- Right column (Question 2 response) -->
-            <div class="testimonial-column">
-              <p>{{ q2_response }}</p>
+
+            <!-- Header: first name + last initial, then class year -->
+            <div class="testimonial-header">
+              <p class="student-name">
+                {{ testimony.first_name }} {{ testimony.last_initial }}
+              </p>
+              {% if testimony.graduation_year %}
+              <p class="grad-year">
+                Class of {{ testimony.graduation_year }}
+              </p>
+              {% endif %}
+            </div>
+
+            <!-- Content: question and answer pairs -->
+            <div class="testimonial-content">
+              <div class="question-answer">
+                <p class="question">Do you see a value in Princeton having a starry sky?</p>
+                <p class="answer">{{ testimony.q1_answer }}</p>
+              </div>
+              <div class="question-answer">
+                <p class="question">Did you experience light pollution on campus, and how did it disturb you?</p>
+                <p class="answer">{{ testimony.q2_answer }}</p>
+              </div>
             </div>
           </div>
-        {% endif %}
-      {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- (Optional) Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Navigation arrows placed underneath -->
+    <div class="swiper-navigation">
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <!-- New: Read More Testimonials Button -->
+    <div class="text-center mt-3">
+      <a href="{{ url_for('testimonials_page') }}" class="btn btn-primary">Read More Testimonials</a>
     </div>
   </div>
 </section>
+
+
 
 
 <!-- SECTION: Google Photos Album -->
@@ -99,7 +129,7 @@
 
 
 <!-- SECTION 3: CURATED PHOTOS & VIDEOS -->
-<section id="curated-media" class="mb-5">
+<!-- <section id="curated-media" class="mb-5">
   <h2>Curated Campus Media</h2>
   <div class="row">
     {% for media in curated_media %}
@@ -120,7 +150,7 @@
     </div>
     {% endfor %}
   </div>
-</section>
+</section> -->
 
 <!-- SECTION 4: USER SUBMISSIONS (Upload Form & Display) -->
 <section id="user-submissions" class="mb-5">

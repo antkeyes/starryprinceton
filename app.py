@@ -18,6 +18,81 @@ app = Flask(__name__)
 app.secret_key = "YOUR_SECRET_KEY"  # Replace with a secure key in production
 
 
+@app.route('/testimonials')
+def testimonials_page():
+    # Path to your CSV file
+    csv_file = os.path.join(app.root_path, 'testimonies.csv')
+
+    # Column names as they appear in your CSV file
+    name_col = "Firstname, Lastname (Can say Anonymous, but there isn't much point in hiding your name). "
+    year_col = "(Anticipated) Year of graduation"
+    q1_col = "Do you see a value in Princeton having a starry sky?"
+    q2_col = "Did you experience light pollution on campus, and how did it disturb you?"
+
+    csv_testimonies = []
+
+    try:
+        with open(csv_file, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                full_name = row.get(name_col, "").strip()
+                grad_year = row.get(year_col, "").strip()
+                q1_answer = row.get(q1_col, "").strip()
+                q2_answer = row.get(q2_col, "").strip()
+
+                # Convert name to "First LastInitial."
+                split_name = full_name.split()
+                if len(split_name) >= 2:
+                    first_name = split_name[0]
+                    last_initial = split_name[-1][0] + "."
+                else:
+                    first_name = full_name
+                    last_initial = ""
+
+                testimony_dict = {
+                    "first_name": first_name,
+                    "last_initial": last_initial,
+                    "graduation_year": grad_year,
+                    "q1_answer": q1_answer,
+                    "q2_answer": q2_answer
+                }
+                csv_testimonies.append(testimony_dict)
+    except Exception as e:
+        print("Error reading CSV file:", e)
+
+    return render_template("testimonials.html", csv_testimonies=csv_testimonies)
+
+
+@app.route('/update_description', methods=['POST'])
+def update_description():
+    media_item_id = request.form.get('media_item_id')
+    description = request.form.get('description')
+
+    if not media_item_id:
+        flash("Media item ID is missing.", "error")
+        return redirect(url_for('index'))
+
+    # Look up the record in the database
+    record = MediaDescription.query.filter_by(media_item_id=media_item_id).first()
+
+    if record:
+        # Update existing record
+        record.description = description
+    else:
+        # Create a new record if one doesn't exist
+        record = MediaDescription(media_item_id=media_item_id, description=description)
+        db.session.add(record)
+
+    db.session.commit()
+    flash("Description updated successfully!", "success")
+    return redirect(url_for('index'))
+
+
+@app.template_filter('split')
+def split_filter(s, sep=None):
+    # Make sure s is a string; you might want to add error checking
+    return s.split(sep)
+
 
 # Configure the database URI (here we use a local SQLite database)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///descriptions.db'
@@ -238,21 +313,53 @@ def index():
             if record:
                 custom_descriptions[item['id']] = record.description
 
-    # ---- Add CSV reading for testimonials here ----
+    # ---- Parse your CSV for testimonials ----
     import csv
     csv_file = os.path.join(app.root_path, 'testimonies.csv')
-    csv_rows = []
-    q1_header = "Do you see a value in Princeton having a starry sky?  Describe your relevant experience. "
-    q2_header = "Did you experience light pollution on campus, and how did it disturb you? (Please give details)."
+
+    # These must match the EXACT column headers in your CSV
+    name_col = "Firstname, Lastname (Can say Anonymous, but there isn't much point in hiding your name). "
+    year_col = "(Anticipated) Year of graduation"
+    q1_col = "Do you see a value in Princeton having a starry sky?"
+    q2_col = "Did you experience light pollution on campus, and how did it disturb you?"
+
+    csv_testimonies = []  # We'll store processed data for each row here
+
     try:
         with open(csv_file, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                csv_rows.append(row)
+                # Extract each field
+                full_name = row.get(name_col, "").strip()
+                grad_year = row.get(year_col, "").strip()
+                q1_answer = row.get(q1_col, "").strip()
+                q2_answer = row.get(q2_col, "").strip()
+
+                # Convert "Adriana Gaitan" -> "Adriana G."
+                split_name = full_name.split()
+                if len(split_name) >= 2:
+                    first_name = split_name[0]
+                    last_initial = split_name[-1][0] + "."  # first letter of last word + "."
+                else:
+                    # If only one part, treat it as the entire name
+                    first_name = full_name
+                    last_initial = ""
+
+                # Build a dict for the template
+                testimony_dict = {
+                    "first_name": first_name,
+                    "last_initial": last_initial,
+                    "graduation_year": grad_year,
+                    "q1_answer": q1_answer,
+                    "q2_answer": q2_answer
+                }
+                csv_testimonies.append(testimony_dict)
     except Exception as e:
         print("Error reading CSV file:", e)
-    # ------------------------------------------------
+        csv_testimonies = []  # fallback if error
 
+    # ------------------------------------------------
+    # Now render the template, passing 'csv_testimonies'
     return render_template(
         "index.html",
         testimonials=testimonials,  # existing sample data if you still need it
@@ -261,33 +368,8 @@ def index():
         user_submissions=user_submissions,
         google_photos_media=google_photos_media,
         custom_descriptions=custom_descriptions,
-        csv_rows=csv_rows,      # pass the CSV rows
-        q1_header=q1_header,    # pass the header for question 1
-        q2_header=q2_header     # pass the header for question 2
+        csv_testimonies=csv_testimonies  # pass new list
     )
-
-
-
-@app.route('/update_description', methods=['POST'])
-def update_description():
-    media_item_id = request.form.get('media_item_id')
-    new_description = request.form.get('description')
-    if not media_item_id:
-        flash("Media item id not provided.", "danger")
-        return redirect(url_for('index'))
-    
-    # Try to find an existing record for this media item.
-    record = MediaDescription.query.filter_by(media_item_id=media_item_id).first()
-    if record:
-        record.description = new_description
-    else:
-        record = MediaDescription(media_item_id=media_item_id, description=new_description)
-        db.session.add(record)
-    db.session.commit()
-    flash("Description updated successfully!", "success")
-    return redirect(url_for('index'))
-
-
 
 # -------------------------
 # Run the App

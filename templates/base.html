@@ -5,13 +5,27 @@
   <meta charset="UTF-8" />
   <title>Light Pollution Awareness</title>
   <!-- Bootstrap CSS (Optional but recommended for easy styling) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+  />
 
   <!-- GLightbox CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+  />
 
+  <!-- Swiper CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper/swiper-bundle.min.css"
+  />
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/styles.css') }}"
+  >
 </head>
 
 <body>
@@ -19,40 +33,42 @@
   <!-- Main Content -->
   <div class="container my-4">
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="alert alert-info" role="alert">
-      {% for msg in messages %}
-      <div>{{ msg }}</div>
-      {% endfor %}
-    </div>
-    {% endif %}
+      {% if messages %}
+        <div class="alert alert-info" role="alert">
+          {% for msg in messages %}
+            <div>{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
     {% endwith %}
 
     {% block content %}{% endblock %}
   </div>
 
-
   <!-- Bootstrap JS (if needed for components) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+  <!-- Optional custom JS file -->
   <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
   <!-- GLightbox JS -->
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-  <!-- GLightbox JS -->
-  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js">
+  </script>
+
   <script>
+    // Initialize GLightbox
     document.addEventListener('DOMContentLoaded', function () {
       const lightbox = GLightbox({
         selector: '.glightbox',
-        // You can add more options here if desired.
-        // For example, to change caption position, see custom CSS below.
       });
     });
   </script>
 
-
-
   <script>
+    // Toggle edit form for Google Photos descriptions
     function toggleEditForm(mediaId) {
       var form = document.getElementById("edit-form-" + mediaId);
       if (form.style.display === "none" || form.style.display === "") {
@@ -63,7 +79,25 @@
     }
   </script>
 
+  <!-- Swiper JS -->
+  <script
+    src="https://unpkg.com/swiper/swiper-bundle.min.js">
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var swiper = new Swiper('.swiper-container.testimonials-carousel', {
+        loop: false,             // Disable loop to avoid cloned slides
+        slidesPerView: 3,        // Show exactly three slides at a time
+        slidesPerGroup: 1,       // Advance one slide per arrow click
+        spaceBetween: 20,        // 20px gap between slides
+        navigation: {
+          nextEl: '.swiper-navigation .swiper-button-next',
+          prevEl: '.swiper-navigation .swiper-button-prev',
+        },
+        autoplay: false          // Disable auto-scrolling
+      });
+    });
+  </script>
 
 </body>
-
 </html>
