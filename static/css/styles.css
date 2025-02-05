@@ -73,7 +73,7 @@ a:hover {
 /* Testimonial card container */
 .testimonial-card {
   position: relative;
-  height: 350px;                    /* Fixed height for every testimonial */
+  height: 400px;                    /* Fixed height for every testimonial */
   background-color: var(--card-bg);  /* Slightly lighter than the page background */
   border: 1px solid #333;           /* Outer border */
   border-top: 3px solid #626EE3;     /* 3px top border in F8B525 */
@@ -108,7 +108,8 @@ a:hover {
 .testimonial-header {
   height: 30%;               /* 30% of 350px (about 105px) */
   text-align: center;
-  padding-top: 35px;         /* Extra padding so the logo doesn’t overlap the text */
+  padding-top: 45px;         /* Extra padding so the logo doesn’t overlap the text */
+  font-size: 1.1em;
 }
 
 /* text "Student Testimonials" */
@@ -163,6 +164,7 @@ a:hover {
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
+  padding-bottom: 10px;
   /* text-align: center; */
 }
 
@@ -400,3 +402,20 @@ a:hover {
   overflow: hidden;
 }
 
+
+/* green border for best testimonials */
+.green-border {
+  /* box-shadow: inset 0 0 7px 3px #63E396; */
+  box-shadow: inset 0 0 7px 3px #F8B525;
+}
+
+/* Remove the blue top border if it has green-border */
+.testimonial-card.green-border {
+  border-top: none !important;
+}
+
+/* Make the Student/Alumni label bigger and bolder */
+.grad-year {
+  font-size: 1.3em; /* tweak as needed, e.g., 1.5em, 18px, etc. */
+  /* font-weight: bold; */
+}

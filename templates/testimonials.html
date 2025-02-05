@@ -4,36 +4,41 @@
   <h2>Student Testimonials</h2>
   <div class="row">
     {% for testimony in csv_testimonies %}
-      <div class="col-md-4 mb-4">
-        <div class="testimonial-card">
-          <!-- Logo circle (same as on the home page) -->
-          <div class="testimonial-logo">
-            <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+    <div class="col-md-4 mb-4">
+      <div
+        class="testimonial-card {% if testimony.grading_gb == '1' or testimony.grading_ak == '1' %}green-border{% endif %}">
+        <!-- Logo circle (same as on the home page) -->
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <!-- Header: first name + last initial, then class year -->
+        <div class="testimonial-header">
+          <p class="grad-year">
+            {% if testimony.graduation_year|int <= 2024 %} Alumni {% elif testimony.graduation_year|int> 2014 %}
+              Student
+              {% else %}
+              <!-- Possibly fallback text or an empty string if year is missing -->
+              {% endif %}
+          </p>
+          {% if testimony.graduation_year %}
+          <p class="grad-year">
+            Class of {{ testimony.graduation_year }}
+          </p>
+          {% endif %}
+        </div>
+        <!-- Content: question and answer pairs -->
+        <div class="testimonial-content">
+          <div class="question-answer">
+            <p class="question">Do you see a value in Princeton having a starry sky?</p>
+            <p class="answer">{{ testimony.q1_answer }}</p>
           </div>
-          <!-- Header: first name + last initial, then class year -->
-          <div class="testimonial-header">
-            <p class="student-name">
-              {{ testimony.first_name }} {{ testimony.last_initial }}
-            </p>
-            {% if testimony.graduation_year %}
-              <p class="grad-year">
-                Class of {{ testimony.graduation_year }}
-              </p>
-            {% endif %}
-          </div>
-          <!-- Content: question and answer pairs -->
-          <div class="testimonial-content">
-            <div class="question-answer">
-              <p class="question">Do you see a value in Princeton having a starry sky?</p>
-              <p class="answer">{{ testimony.q1_answer }}</p>
-            </div>
-            <div class="question-answer">
-              <p class="question">Did you experience light pollution on campus, and how did it disturb you?</p>
-              <p class="answer">{{ testimony.q2_answer }}</p>
-            </div>
+          <div class="question-answer">
+            <p class="question">Did you experience light pollution on campus, and how did it disturb you?</p>
+            <p class="answer">{{ testimony.q2_answer }}</p>
           </div>
         </div>
       </div>
+    </div>
     {% endfor %}
   </div>
 </section>

@@ -21,7 +21,8 @@
       <div class="swiper-wrapper">
         {% for testimony in csv_testimonies %}
         <div class="swiper-slide">
-          <div class="testimonial-card">
+          <div
+            class="testimonial-card {% if testimony.grading_gb == '1' or testimony.grading_ak == '1' %}green-border{% endif %}">
             <!-- Logo circle -->
             <div class="testimonial-logo">
               <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
@@ -29,8 +30,12 @@
 
             <!-- Header: first name + last initial, then class year -->
             <div class="testimonial-header">
-              <p class="student-name">
-                {{ testimony.first_name }} {{ testimony.last_initial }}
+              <p class="grad-year">
+                {% if testimony.graduation_year|int <= 2024 %} Alumni {% elif testimony.graduation_year|int> 2014 %}
+                  Student
+                  {% else %}
+                  <!-- Possibly fallback text or an empty string if year is missing -->
+                  {% endif %}
               </p>
               {% if testimony.graduation_year %}
               <p class="grad-year">
@@ -42,7 +47,8 @@
             <!-- Content: question and answer pairs -->
             <div class="testimonial-content">
               <div class="question-answer">
-                <p class="question">Do you see a value in Princeton having a starry sky?</p>
+                <p class="question">Do you see a value in Princeton having a starry sky? Describe your relevant
+                  experience.</p>
                 <p class="answer">{{ testimony.q1_answer }}</p>
               </div>
               <div class="question-answer">
@@ -71,8 +77,6 @@
     </div>
   </div>
 </section>
-
-
 
 
 <!-- SECTION: Google Photos Album -->

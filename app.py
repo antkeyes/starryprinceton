@@ -26,21 +26,25 @@ def testimonials_page():
     # Column names as they appear in your CSV file
     name_col = "Firstname, Lastname (Can say Anonymous, but there isn't much point in hiding your name). "
     year_col = "(Anticipated) Year of graduation"
-    q1_col = "Do you see a value in Princeton having a starry sky?"
+    q1_col = "Do you see a value in Princeton having a starry sky?  Describe your relevant experience."
     q2_col = "Did you experience light pollution on campus, and how did it disturb you?"
 
     csv_testimonies = []
-
     try:
         with open(csv_file, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f)
             for row in reader:
+                # Retrieve each field and remove extra whitespace
                 full_name = row.get(name_col, "").strip()
                 grad_year = row.get(year_col, "").strip()
                 q1_answer = row.get(q1_col, "").strip()
                 q2_answer = row.get(q2_col, "").strip()
+                
+                # Retrieve the grading columns inside the loop
+                grading_gb = row.get("Grading GB", "").strip()
+                grading_ak = row.get("Grading AK", "").strip()
 
-                # Convert name to "First LastInitial."
+                # Convert full name to first name and last initial
                 split_name = full_name.split()
                 if len(split_name) >= 2:
                     first_name = split_name[0]
@@ -54,11 +58,14 @@ def testimonials_page():
                     "last_initial": last_initial,
                     "graduation_year": grad_year,
                     "q1_answer": q1_answer,
-                    "q2_answer": q2_answer
+                    "q2_answer": q2_answer,
+                    "grading_gb": grading_gb,
+                    "grading_ak": grading_ak
                 }
                 csv_testimonies.append(testimony_dict)
     except Exception as e:
         print("Error reading CSV file:", e)
+        csv_testimonies = []
 
     return render_template("testimonials.html", csv_testimonies=csv_testimonies)
 
@@ -349,7 +356,7 @@ def index():
     csv_file = os.path.join(app.root_path, 'testimonies.csv')
     name_col = "Firstname, Lastname (Can say Anonymous, but there isn't much point in hiding your name). "
     year_col = "(Anticipated) Year of graduation"
-    q1_col = "Do you see a value in Princeton having a starry sky?"
+    q1_col = "Do you see a value in Princeton having a starry sky?  Describe your relevant experience."
     q2_col = "Did you experience light pollution on campus, and how did it disturb you?"
     csv_testimonies = []
     try:
@@ -360,7 +367,8 @@ def index():
                 grad_year = row.get(year_col, "").strip()
                 q1_answer = row.get(q1_col, "").strip()
                 q2_answer = row.get(q2_col, "").strip()
-
+                grading_gb = row.get("Grading GB", "").strip()
+                grading_ak = row.get("Grading AK", "").strip()
                 split_name = full_name.split()
                 if len(split_name) >= 2:
                     first_name = split_name[0]
@@ -374,7 +382,9 @@ def index():
                     "last_initial": last_initial,
                     "graduation_year": grad_year,
                     "q1_answer": q1_answer,
-                    "q2_answer": q2_answer
+                    "q2_answer": q2_answer,
+                    "grading_gb": grading_gb,
+                    "grading_ak": grading_ak
                 }
                 csv_testimonies.append(testimony_dict)
     except Exception as e:
