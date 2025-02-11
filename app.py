@@ -14,6 +14,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from google_auth_oauthlib.flow import Flow
 from google.auth.transport.requests import Request
+from dateutil import parser
 import google.oauth2.credentials
 from werkzeug.utils import secure_filename
 import json
@@ -60,10 +61,11 @@ class OAuthCredentials(db.Model):
     client_id = db.Column(db.String(512))
     client_secret = db.Column(db.String(512))
     scopes = db.Column(db.String(1024))  # Stored as a comma-separated list
+    expiry = db.Column(db.DateTime, nullable=True)
 
     def to_credentials(self):
         from google.oauth2.credentials import Credentials
-        return Credentials(
+        creds = Credentials(
             token=self.token,
             refresh_token=self.refresh_token,
             token_uri=self.token_uri,
@@ -71,6 +73,9 @@ class OAuthCredentials(db.Model):
             client_secret=self.client_secret,
             scopes=self.scopes.split(',') if self.scopes else []
         )
+        if self.expiry:
+            creds.expiry = self.expiry
+        return creds
 
     def update_from_credentials(self, credentials):
         self.token = credentials.token
@@ -81,6 +86,7 @@ class OAuthCredentials(db.Model):
         self.client_id = credentials.client_id
         self.client_secret = credentials.client_secret
         self.scopes = ','.join(credentials.scopes) if credentials.scopes else ''
+        self.expiry = credentials.expiry
 
 # Create the database tables if they don't exist.
 with app.app_context():
@@ -96,7 +102,8 @@ def credentials_to_dict(credentials):
         'token_uri': credentials.token_uri,
         'client_id': credentials.client_id,
         'client_secret': credentials.client_secret,
-        'scopes': credentials.scopes
+        'scopes': credentials.scopes,
+        'expiry': credentials.expiry.isoformat() if credentials.expiry else None
     }
 
 def get_user_credentials():
@@ -107,17 +114,15 @@ def get_user_credentials():
         logger.error("No credentials record found for user_id: %s", user_id)
         return None
     credentials = creds_record.to_credentials()
-    logger.debug("Current token expiry: %s", getattr(credentials, 'expiry', 'not set'))
-    logger.debug("Credentials valid before refresh: %s", credentials.valid)
-    if not credentials.valid:
+
+    if credentials.expired or not credentials.valid:
         try:
             credentials.refresh(Request())
-        except Exception as e:
-            logger.error("Error refreshing credentials: %s", e, exc_info=True)
+            creds_record.update_from_credentials(credentials)
+            db.session.commit()
+        except Exception:
             return None
-        creds_record.update_from_credentials(credentials)
-        db.session.commit()
-        logger.debug("Credentials refreshed successfully!")
+
     return credentials
 
 def list_albums():
