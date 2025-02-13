@@ -6,7 +6,6 @@
   <div class="twinkling"></div>
 </div>
 
-
 <!-- HERO/HEADER SECTION (Now using new class names) -->
 <div class="hero-banner p-5 mb-4 rounded-3">
   <div class="container-fluid py-5 hero-text">
@@ -17,79 +16,60 @@
   </div>
 </div>
 
-<!-- student testimonials -->
+<!-- Student Testimonials using Flickity -->
 <section id="testimonials" class="mb-5">
   <h2>Student Testimonials</h2>
-  <!-- Parent container to control overall slider width -->
-  <div class="swiper-parent">
-    <!-- Swiper container -->
-    <div class="swiper-container testimonials-carousel">
-      <div class="swiper-wrapper">
-        {% for testimony in csv_testimonies %}
-        <div class="swiper-slide">
-          <div
-            class="testimonial-card {% if testimony.grading_gb == '1' or testimony.grading_ak == '1' %}green-border{% endif %}">
-            <!-- Logo circle -->
-            <div class="testimonial-logo">
-              <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
-            </div>
-
-            <!-- Header: first name + last initial, then class year -->
-            <div class="testimonial-header">
-              <p class="grad-year">
-                {% if testimony.graduation_year|int <= 2024 %} Alumni {% elif testimony.graduation_year|int> 2014 %}
-                  Student
-                  {% else %}
-                  <!-- Possibly fallback text or an empty string if year is missing -->
-                  {% endif %}
-              </p>
-              {% if testimony.graduation_year %}
-              <p class="grad-year">
-                Class of {{ testimony.graduation_year }}
-              </p>
-              {% endif %}
-            </div>
-
-            <!-- Content: question and answer pairs -->
-            <div class="testimonial-content">
-              <div class="question-answer">
-                <p class="question">Do you see a value in Princeton having a starry sky? Describe your relevant
-                  experience.</p>
-                <p class="answer">{{ testimony.q1_answer }}</p>
-              </div>
-              <div class="question-answer">
-                <p class="question">Did you experience light pollution on campus, and how did it disturb you?</p>
-                <p class="answer">{{ testimony.q2_answer }}</p>
-              </div>
-            </div>
+  <!-- Flickity carousel container -->
+  <div class="testimonial-carousel" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false, "prevNextButtons": true }'>
+    {% for testimony in csv_testimonies %}
+    <div class="carousel-cell">
+      <div class="testimonial-card {% if testimony.grading_gb == '1' or testimony.grading_ak == '1' %}green-border{% endif %}">
+        <!-- Logo circle -->
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <!-- Header: first name + last initial, then class year -->
+        <div class="testimonial-header">
+          <p class="grad-year">
+            {% if testimony.graduation_year|int <= 2024 %} Alumni {% elif testimony.graduation_year|int > 2014 %}
+              Student
+            {% endif %}
+          </p>
+          {% if testimony.graduation_year %}
+          <p class="grad-year">
+            Class of {{ testimony.graduation_year }}
+          </p>
+          {% endif %}
+        </div>
+        <!-- Content: question and answer pairs -->
+        <div class="testimonial-content">
+          <div class="question-answer">
+            <p class="question">
+              Do you see a value in Princeton having a starry sky? Describe your relevant experience.
+            </p>
+            <p class="answer">{{ testimony.q1_answer }}</p>
+          </div>
+          <div class="question-answer">
+            <p class="question">
+              Did you experience light pollution on campus, and how did it disturb you?
+            </p>
+            <p class="answer">{{ testimony.q2_answer }}</p>
           </div>
         </div>
-        {% endfor %}
       </div>
-
-      <!-- (Optional) Pagination -->
-      <div class="swiper-pagination"></div>
     </div>
-
-    <!-- Navigation arrows placed underneath -->
-    <div class="swiper-navigation">
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-    </div>
-
-    <!-- New: Read More Testimonials Button -->
-    <div class="text-center mt-3">
-      <a href="{{ url_for('testimonials_page') }}" class="btn btn-primary">Read All Testimonials</a>
-    </div>
+    {% endfor %}
+  </div>
+  <!-- Read More Testimonials Button -->
+  <div class="text-center mt-3">
+    <a href="{{ url_for('testimonials_page') }}" class="btn btn-primary">Read All Testimonials</a>
   </div>
 </section>
-
 
 <!-- SECTION: Google Photos Album -->
 {% if google_photos_media %}
 <section id="google-photos" class="mb-5">
   <h2>Google Photos Album</h2>
-
   <!-- NEW SCROLLABLE WRAPPER (500px height + vertical scroll) -->
   <div class="google-photos-container">
     <div class="row">
@@ -104,19 +84,13 @@
           </a>
           {% elif "video" in item.mimeType %}
           <a href="{{ item.baseUrl }}=dv" class="glightbox" data-gallery="album" data-type="video"
-            data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
-            <!-- VIDEO THUMBNAIL: container + overlay -->
+              data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
             <div class="card-img-top video-container">
-              <video class="media-thumbnail">
-                <source src="{{ item.baseUrl }}=dv" type="{{ item.mimeType }}">
-                Your browser does not support the video tag.
-              </video>
-              <!-- Centered play icon -->
-              <div class="video-overlay">▶</div>
+              <!-- Use an <img> for the thumbnail so it reliably loads -->
+              <img src="{{ item.baseUrl }}=w400-h300" alt="Video Thumbnail" class="media-thumbnail">
             </div>
           </a>
           {% endif %}
-          
           <div class="card-body">
             <p class="card-text" id="desc-{{ item.id }}">
               {{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}
@@ -137,7 +111,6 @@
       {% endfor %}
     </div> <!-- .row -->
   </div>  <!-- .google-photos-container -->
-
 </section>
 {% else %}
 <section id="google-photos">
@@ -145,11 +118,9 @@
 </section>
 {% endif %}
 
-
-
-
 <!-- SECTION 3: CURATED PHOTOS & VIDEOS -->
-<!-- <section id="curated-media" class="mb-5">
+<!--
+<section id="curated-media" class="mb-5">
   <h2>Curated Campus Media</h2>
   <div class="row">
     {% for media in curated_media %}
@@ -170,9 +141,10 @@
     </div>
     {% endfor %}
   </div>
-</section> -->
+</section>
+-->
 
-<!-- user submissions section -->
+<!-- User Submissions Section -->
 <section id="user-submissions" class="mb-5">
   <h2>Share Your Photos & Videos</h2>
   <p>
@@ -187,22 +159,17 @@
           <label for="media_file" class="form-label">Select Image</label>
           <input class="form-control" type="file" id="media_file" name="media_file" accept="image/*" required>
         </div>
-
         <!-- Image Description -->
         <div class="mb-3">
           <label for="description" class="form-label">Image Description</label>
           <input type="text" class="form-control" id="description" name="description"
             placeholder="Describe the image and where it was taken" required>
         </div>
-
         <!-- Your Name -->
         <div class="mb-3">
-          <label for="user_name" class="form-label">
-            Your Name (Optional)</span>
-          </label>
+          <label for="user_name" class="form-label">Your Name (Optional)</label>
           <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Enter your name">
         </div>
-
         <!-- Location Picker -->
         <div class="mb-3">
           <label for="location" class="form-label">Click on the map to select where the photo was taken.</label>
@@ -212,11 +179,9 @@
           <input type="hidden" id="latitude" name="latitude">
           <input type="hidden" id="longitude" name="longitude">
         </div>
-
         <button type="submit" class="btn btn-primary">Upload</button>
       </form>
     </div>
-
     <!-- Right Column: Recent Submissions -->
     <div class="col-md-6 submissions-section">
       <h3>Recent Submissions</h3>
@@ -254,6 +219,5 @@
     </div>
   </div>
 </section>
-
 
 {% endblock %}

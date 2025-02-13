@@ -488,7 +488,7 @@ a:hover {
    If you want to remove the inline style in your index.html,
    you can rely on this class alone. */
 .google-photos-container {
-  max-height: 800px;      /* fixed height */
+  max-height: 700px;      /* fixed height */
   overflow-y: auto;       /* scrollbar if rows exceed 500px */
   /* make sure parent container fits all columns without horizontal scroll bar */
   padding-left: 15px;
@@ -520,4 +520,62 @@ a:hover {
   font-size: 3rem;                   /* play symbol size */
   color: rgba(255, 255, 255, 0.85);  /* white with transparency */
   pointer-events: none;              /* clicks pass through to link */
+}
+
+
+/* Optional: Limit the width of the Flickity carousel and center it */
+.testimonial-carousel {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Ensure that each Flickity cell displays as desired */
+.carousel-cell {
+  width: 100%;
+  padding: 0 10px; /* optional: adjust spacing between cells */
+  box-sizing: border-box;
+}
+
+
+ /* Flickity cell widths for testimonials */
+@media (min-width: 992px) {
+  .testimonial-carousel .carousel-cell {
+    width: 33.33%; /* Three cells per view */
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .testimonial-carousel .carousel-cell {
+    width: 50%; /* Two cells per view on tablet */
+  }
+}
+@media (max-width: 767px) {
+  .testimonial-carousel .carousel-cell {
+    width: 100%; /* One cell per view on mobile */
+  }
+}
+
+
+/* Position Flickity navigation arrows beneath the carousel */
+.flickity-prev-next-button {
+  top: auto;
+  bottom: -50px;  /* Adjust this value to position the arrows just above the "Read All Testimonials" button */
+  transform: none;
+}
+
+/* Optionally adjust their size and appearance */
+.flickity-prev-next-button {
+  width: 45px;
+  height: 45px;
+  background-color: #757575;
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.flickity-prev-next-button:hover {
+  background-color: #888;
+}
+.flickity-prev-next-button.previous::before,
+.flickity-prev-next-button.next::before {
+  font-size: 24px;
+  line-height: 45px;
+  color: #fff;
 }
