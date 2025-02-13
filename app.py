@@ -131,7 +131,7 @@ def list_albums():
         logger.error("No OAuth credentials found. Please authorize first.")
         return []
     access_token = credentials.token
-    url = 'https://photoslibrary.googleapis.com/v1/albums'
+    url = 'https://photoslibrary.googleapis.com/v1/albums?excludeNonAppCreatedData=false'
     headers = {'Authorization': f'Bearer {access_token}'}
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
@@ -139,6 +139,24 @@ def list_albums():
     else:
         logger.error("Error listing albums: %s", response.text)
         return []
+
+def list_shared_albums():
+    """List shared albums that your account has joined."""
+    credentials = get_user_credentials()
+    if credentials is None:
+        logger.error("No OAuth credentials found. Please authorize first.")
+        return []
+    access_token = credentials.token
+    url = 'https://photoslibrary.googleapis.com/v1/sharedAlbums?pageSize=50'
+    headers = {'Authorization': f'Bearer {access_token}'}
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json().get('sharedAlbums', [])
+    else:
+        logger.error("Error listing shared albums: %s", response.text)
+        return []
+
+
 
 def fetch_album_items(album_id):
     credentials = get_user_credentials()
@@ -151,13 +169,53 @@ def fetch_album_items(album_id):
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
-    data = {'album_id': album_id, 'pageSize': 50}
-    response = requests.post(url, headers=headers, json=data)
-    if response.status_code == 200:
-        return response.json().get('mediaItems', [])
-    else:
-        logger.error("Error fetching album items: %s", response.text)
-        return []
+    
+    media_items = []
+    page_token = None
+    
+    while True:
+        data = {
+            'albumId': album_id,    # Note: Use 'albumId' as per the API docs.
+            'pageSize': 50          # You can adjust this up to 100 if needed.
+        }
+        if page_token:
+            data['pageToken'] = page_token
+
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 200:
+            result = response.json()
+            # Append the fetched items to our list
+            media_items.extend(result.get('mediaItems', []))
+            
+            # Check if there's a nextPageToken for more items
+            page_token = result.get('nextPageToken')
+            if not page_token:
+                break  # No more pages, so exit the loop
+        else:
+            logger.error("Error fetching album items: %s", response.text)
+            break
+
+    return media_items
+
+
+
+@app.route('/list_albums')
+def list_albums_route():
+    albums = list_albums()
+    return "<br>".join(f"{album['title']} : {album['id']}" for album in albums)
+
+@app.route('/list_shared_albums')
+def list_shared_albums_route():
+    shared_albums = list_shared_albums()
+    # For each album, display its title and ID (and optionally its shareToken)
+    output = []
+    for album in shared_albums:
+        title = album.get('title', 'No Title')
+        album_id = album.get('id', 'No ID')
+        share_token = album.get('shareToken', 'No share token')
+        output.append(f"Title: {title} | ID: {album_id} | Share Token: {share_token}")
+    return "<br>".join(output)
+
 
 # -------------------------
 # Template Filter
@@ -287,7 +345,7 @@ def update_description():
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "uploads")
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "mp4", "mov", "avi"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16 MB max upload size
+app.config["MAX_CONTENT_LENGTH"] = 30 * 1024 * 1024  # 30 MB max upload size
 
 testimonials = [
     {"name": "John D.", "quote": "The bright lights outside the dorm keep me up all night."},
@@ -354,7 +412,7 @@ def index():
     # GET request handling
     google_photos_media = []
     if get_user_credentials() is not None:
-        album_id = "AEVtP4Aw64PA0nj6cfP-wofknQrsFqnWkKON_UyptQpPTAr-jzVKONdocx7BANAKmH6vRQIA6cH9"
+        album_id = "AEVtP4D74JfzPzEtmKex0CU3WxAIgndiha9nunlApgNgznOBdRU3cFGPGiRhkvMLcJKgSYob9H2VQ4DfrMGzHnDylxATBSQOVA"
         google_photos_media = fetch_album_items(album_id)
     
     custom_descriptions = {}
