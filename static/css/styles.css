@@ -1,13 +1,13 @@
 /* Define CSS variables for the dark theme */
 :root {
   --bg-color: #181818;           /* Very dark background */
-  --text-color: #e0e0e0;           /* Light text */
-  --accent-color: #bb86fc;         /* Accent color (purple) */
-  --card-bg: #212121;             /* Card background */
-  --card-border: #333333;         /* Card border */
-  --link-color: #bb86fc;          /* Link color */
-  --link-hover: #d6aefc;           /* Link hover color */
-  --navbar-bg: #1f1f1f;           /* Navbar background */
+  --text-color: #e0e0e0;         /* Light text */
+  --accent-color: #bb86fc;       /* Accent color (purple) */
+  --card-bg: #212121;            /* Card background */
+  --card-border: #333333;        /* Card border */
+  --link-color: #bb86fc;         /* Link color */
+  --link-hover: #d6aefc;         /* Link hover color */
+  --navbar-bg: #1f1f1f;          /* Navbar background */
 }
 
 /* Global styles */
@@ -37,10 +37,11 @@ a:hover {
 
 /* HERO SECTION */
 .hero-banner {
-  background-image: url("/static/images/banner.PNG");
+  background-image: url("/static/images/banner1.PNG");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  margin-top: 50px;
   position: relative;
   color: #F8B525;
   overflow: hidden;
@@ -76,23 +77,23 @@ a:hover {
   height: 400px;                    /* Fixed height for every testimonial */
   background-color: var(--card-bg);  /* Slightly lighter than the page background */
   border: 1px solid #333;           /* Outer border */
-  border-top: 3px solid #626EE3;     /* 3px top border in F8B525 */
+  border-top: 3px solid #626EE3;    /* 3px top border */
   border-radius: 10px;
   box-sizing: border-box;
   margin: 40px 0px 20px;           /* Top margin allows space for the overlapping logo */
-  padding: 0 10px 10px 10px;        /* Horizontal & bottom padding; top space is provided by header */
+  padding: 0 10px 10px 10px;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
 
 /* Logo circle that overlaps the card top */
 .testimonial-logo {
   position: absolute;
-  top: -25px;                /* Half of the 60px diameter so that the center aligns with the top border */
+  top: -25px;
   left: 50%;
   transform: translateX(-50%);
   width: 50px;
   height: 50px;
-  background-color: #f5f5f5;    /* Grey background for the circle */
+  background-color: #f5f5f5;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -106,9 +107,9 @@ a:hover {
 
 /* Header section (top 30% of card height ~105px) */
 .testimonial-header {
-  height: 30%;               /* 30% of 350px (about 105px) */
+  height: 30%;
   text-align: center;
-  padding-top: 45px;         /* Extra padding so the logo doesn’t overlap the text */
+  padding-top: 45px;
   font-size: 1.1em;
 }
 
@@ -116,7 +117,6 @@ a:hover {
 #testimonials h2 {
   text-align: center;
 }
-
 
 .testimonial-header .student-name {
   font-size: 1.2em;
@@ -130,8 +130,8 @@ a:hover {
 
 /* Content section (remaining 70% of the card) */
 .testimonial-content {
-  height: 70%;              /* Approximately 245px */
-  overflow-y: auto;         /* Scrollbar appears if content overflows */
+  height: 70%;
+  overflow-y: auto;
   padding: 10px 5px;
   box-sizing: border-box;
   scrollbar-width: thin;
@@ -142,32 +142,27 @@ a:hover {
 .testimonial-content::-webkit-scrollbar {
   width: 8px; /* Adjust the width as needed */
 }
-
 .testimonial-content::-webkit-scrollbar-track {
-  background: transparent; /* No background on the track */
+  background: transparent; 
 }
-
 .testimonial-content::-webkit-scrollbar-thumb {
-  background-color: var(--accent-color); /* Use your accent color for the thumb */
-  border-radius: 10px;  /* Makes the thumb pill-shaped */
+  background-color: var(--accent-color);
+  border-radius: 10px;
 }
 
 /* Styling for each question and answer pair */
 .question-answer {
   margin-bottom: 30px;
 }
-
 .question {
   font-weight: bold;
   font-size: 1.1em;
-  border-bottom: 1px solid #757575;  /* Thin underline */
+  border-bottom: 1px solid #757575;
   margin-bottom: 5px;
   margin-left: 5px;
   margin-right: 5px;
   padding-bottom: 10px;
-  /* text-align: center; */
 }
-
 .answer {
   font-size: 1em;
   line-height: 1.5em;
@@ -179,46 +174,35 @@ a:hover {
 /* --------------------------------------------------
    Swiper Carousel Styles for Testimonials
 -------------------------------------------------- */
-/* Parent container: limit overall width and center */
 .swiper-parent {
-  max-width: 1200px; /* Adjust as needed */
+  max-width: 1200px;
   margin: 0 auto;
 }
-
-/* Swiper container: ensure overflow is hidden */
 .swiper-container.testimonials-carousel {
   width: 100%;
-  overflow: hidden;  /* Clips any slide beyond the container's width */
+  overflow: hidden;
 }
-
-/* Do not force a width on slides so that Swiper calculates widths based on slidesPerView */
 .swiper-slide {
-  /* Remove any manual width settings */
+  /* no manual width here */
 }
-
-/* Testimonial card should take full width of its slide */
 .testimonial-card {
   width: 100%;
 }
 
 /* Navigation container: position arrows below the slider and center them */
-/* Position arrows below the slider and center them with a gap */
 .swiper-navigation {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;          /* 20px space between the circles */
+  gap: 40px;
   margin-top: 20px;
 }
-
-/* Make each arrow a 45×45 circle, red for demo */
 .swiper-navigation .swiper-button-prev,
 .swiper-navigation .swiper-button-next {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: #757575;   /* Use any color you want */
-  /* background: none !important; <-- Remove or comment this out */
+  background-color: #757575;
   position: relative;
   z-index: 9999;
   cursor: pointer;
@@ -227,50 +211,42 @@ a:hover {
   justify-content: center;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
-
 .swiper-navigation .swiper-button-prev:hover,
 .swiper-navigation .swiper-button-next:hover {
   background-color: #888;
 }
-
 /* Pseudo-element for arrow icons */
 .swiper-button-prev::after,
 .swiper-button-next::after {
   content: "";
   display: block;
-  width: 24px;       /* size of arrow icon */
+  width: 24px; 
   height: 24px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
-
-/* Specific arrow images */
 .swiper-button-prev::after {
   background-image: url("/static/images/left_arrow.svg");
 }
-
 .swiper-button-next::after {
   background-image: url("/static/images/right_arrow.svg");
 }
 
-
 /* --------------------------------------------------
    Legacy Testimonial Section Styles (if needed)
-   (These styles were used in the previous design and may be removed)
 -------------------------------------------------- */
 .testimonials-box {
   position: relative;
   max-width: 100%;
-  height: 750px;           /* Fixed height */
-  overflow-y: auto;        /* Vertical scrollbar when content exceeds height */
+  height: 750px;
+  overflow-y: auto;
   padding: 1rem;
-  padding-top: 0;          /* Remove top padding so the header is flush */
+  padding-top: 0;
   background-color: #1e1e1e;
   border: 1px solid #333;
   border-radius: 5px;
 }
-
 .testimonials-header {
   position: sticky;
   top: 0;
@@ -279,30 +255,24 @@ a:hover {
   padding: 0.5rem 1rem;
   border-bottom: 2px solid #333;
 }
-
 .titles-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0;
 }
-
 .testimonial-title {
   font-weight: bold;
   font-size: 1.1em;
   color: #e0e0e0;
 }
-
 .testimonials-content {
   padding-top: 1rem;
 }
-
 .testimonial-row {
   display: flex;
-  gap: 1rem; /* Adds space between the two testimonial cards */
+  gap: 1rem;
 }
-
-/* Legacy testimonial column styles */
 .testimonial-column {
   max-width: 500px;
   margin: 0 auto;
@@ -313,7 +283,6 @@ a:hover {
   box-sizing: border-box;
   color: var(--text-color);
 }
-
 .testimonial-column:last-child {
   margin-right: 0;
 }
@@ -322,20 +291,19 @@ a:hover {
   white-space: pre-wrap;
 }
 
+/* Button primary */
 .btn.btn-primary {
   margin-top: 20px;
-  background-color: #626EE3;  /* Replace with your desired color */
-  border-color: var(--card-border);      /* Ensures the border matches */
-  color: #fff;                /* Text color, adjust if needed */
+  background-color: #626EE3;
+  border-color: var(--card-border);
+  color: #fff;
 }
-
 .btn.btn-primary:hover {
-  background-color: #7C86E7;  /* A slightly darker shade for the hover state */
+  background-color: #7C86E7;
   border-color: var(--card-border);
   text-decoration: none;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
 }
-
 
 /* --------------------------------------------------
    CARD STYLES (for other sections)
@@ -387,35 +355,169 @@ a:hover {
   color: #888;
 }
 
-
-
 /* --------------------------------------------------
    user submissions
 -------------------------------------------------- */
 .user-submission-card {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-top: 3px solid #626EE3; /* or any accent color */
   border-radius: 10px;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
   margin: 20px 0;
   overflow: hidden;
 }
-
+/* map inside of user submission cards */
+.user-submission-card a img {
+  width: 90%; 
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 10px auto 0;
+}
+#user-submissions .upload-section {
+  padding-right: 20px;
+  border-right: 1px solid #333;
+}
+#user-submissions .submissions-section {
+  padding-left: 20px;
+}
+#user-submissions h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2em;
+  font-weight: normal;
+}
+#user-submissions h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5em;
+  font-weight: normal;
+}
+#user-submissions > h2 {
+  margin-top: 75px;
+}
+#user-submissions > p {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.form-text {
+  color: #DFDFDF;
+}
 
 /* green border for best testimonials */
 .green-border {
   /* box-shadow: inset 0 0 7px 3px #63E396; */
   box-shadow: inset 0 0 7px 3px #F8B525;
 }
-
 /* Remove the blue top border if it has green-border */
 .testimonial-card.green-border {
   border-top: none !important;
 }
-
 /* Make the Student/Alumni label bigger and bolder */
 .grad-year {
-  font-size: 1.3em; /* tweak as needed, e.g., 1.5em, 18px, etc. */
-  /* font-weight: bold; */
+  font-size: 1.3em;
+}
+
+/* background stars animation */
+@keyframes move-background {
+  from {
+      -webkit-transform: translate3d(0px, 0px, 0px);
+      transform: translate3d(0px, 0px, 0px);
+  }
+  to {
+      -webkit-transform: translate3d(1000px, 0px, 0px);
+      transform: translate3d(1000px, 0px, 0px);
+  }
+}
+@-webkit-keyframes move-background {
+  from {
+      -webkit-transform: translate3d(0px, 0px, 0px);
+  }
+  to {
+      -webkit-transform: translate3d(1000px, 0px, 0px);
+  }
+}
+@-moz-keyframes move-background {
+  from {
+      -moz-transform: translate3d(0px, 0px, 0px);
+  }
+  to {
+      -moz-transform: translate3d(1000px, 0px, 0px);
+  }
+}
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+.stars {
+  background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  z-index: 0;
+}
+.twinkling {
+  width: 10000px;
+  height: 100%;
+  background: transparent url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/twinkling.png") repeat;
+  background-size: 1000px 1000px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  -moz-animation: move-background 70s linear infinite;
+  -ms-animation: move-background 70s linear infinite;
+  -o-animation: move-background 70s linear infinite;
+  -webkit-animation: move-background 70s linear infinite;
+  animation: move-background 70s linear infinite;
+}
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   ADD THE NEW CODE BELOW
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+/* 1) Make the Google Photos container scrollable (500px tall).
+   If you want to remove the inline style in your index.html,
+   you can rely on this class alone. */
+.google-photos-container {
+  max-height: 800px;      /* fixed height */
+  overflow-y: auto;       /* scrollbar if rows exceed 500px */
+  /* make sure parent container fits all columns without horizontal scroll bar */
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* 2) Force all media thumbnails (images & videos) to fill
+   the width and keep a uniform height. */
+.media-thumbnail {
+  width: 100%;
+  height: 200px;          /* you can adjust this if you like */
+  object-fit: cover;      /* crop edges instead of squishing */
+}
+
+/* 3) A container for videos to help position the overlay. */
+.video-container {
+  position: relative;     /* needed for absolutely-positioned overlay */
+  width: 100%;
+  height: 200px;          /* same height as .media-thumbnail */
+  overflow: hidden;
+}
+
+/* 4) The overlay "play" icon in the center of the video thumbnail. */
+.video-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;                   /* play symbol size */
+  color: rgba(255, 255, 255, 0.85);  /* white with transparency */
+  pointer-events: none;              /* clicks pass through to link */
 }
