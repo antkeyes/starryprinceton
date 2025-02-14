@@ -120,7 +120,7 @@
         .catch(err => console.error('log_event error:', err));
       });
 
-      // recalculate flickity layout on window resize for smoother transitions
+      // Recalculate Flickity layout on window resize for smoother transitions
       window.addEventListener('resize', function() {
         flkty.resize();
       });
@@ -171,6 +171,66 @@
     document.documentElement.style.overflowX = 'hidden';
     document.body.style.overflowX = 'hidden';
   </script>
+
+  <!-- Updated Geolocation Script:
+       On successful geolocation, store lat/lng and hide the map container -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            document.getElementById("latitude").value = lat;
+            document.getElementById("longitude").value = lng;
+            // Hide the map if location sharing is enabled
+            var mapElement = document.getElementById("map");
+            if (mapElement) {
+              mapElement.style.display = "none";
+            }
+          },
+          function(error) {
+            console.error(error);
+            // Optionally handle the error or let users pick their location on the map
+            var mapElement = document.getElementById("map");
+            if (mapElement) {
+              mapElement.style.display = "block";
+            }
+          }
+        );
+      }
+    });
+  </script>
+  
+  <!-- File Input Customization & Thumbnail Preview Script:
+       - Change label text based on device (using user agent) so that desktop always shows "Choose File"
+       - Show a thumbnail preview of the selected/taken image -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mediaLabel = document.getElementById('media_file_label');
+      // Check if the device is mobile using the user agent
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (mediaLabel) {
+        mediaLabel.textContent = isMobile ? "Take Photo" : "Choose File";
+      }
+
+      // If the file input exists, add an event listener to show thumbnail preview
+      const fileInput = document.getElementById('media_file');
+      if (fileInput) {
+        fileInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const thumbnail = document.getElementById('photo_thumbnail');
+            if (thumbnail) {
+              thumbnail.src = URL.createObjectURL(file);
+              thumbnail.style.display = 'block';
+            }
+          }
+        });
+      }
+    });
+  </script>
+  
 </body>
 
 </html>

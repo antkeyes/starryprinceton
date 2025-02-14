@@ -156,9 +156,18 @@
       <form action="{{ url_for('index') }}" method="POST" enctype="multipart/form-data" class="mb-4">
         <!-- File Upload -->
         <div class="mb-3">
-          <label for="media_file" class="form-label">Select Image</label>
-          <input class="form-control" type="file" id="media_file" name="media_file" accept="image/*" required>
+          <!-- Custom label acting as the button -->
+          <label for="media_file" id="media_file_label" class="custom-file-label btn btn-secondary">
+            Choose File
+          </label>
+          <!-- Hidden file input with capture attribute -->
+          <input class="d-none" type="file" id="media_file" name="media_file" accept="image/*" capture="camera" required>
+          <!-- Thumbnail preview element (initially hidden) -->
+          <img id="photo_thumbnail" src="" alt="Image Preview" style="display:none; max-width:100px; margin-top:10px;">
         </div>
+        
+        
+
         <!-- Image Description -->
         <div class="mb-3">
           <label for="description" class="form-label">Image Description</label>

@@ -20,6 +20,7 @@ from werkzeug.utils import secure_filename
 import json
 import requests
 import csv
+import uuid
 
 # -------------------------
 # Define the Flask App
@@ -387,16 +388,27 @@ def allowed_file(filename):
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        # Retrieve file and form data
         file = request.files.get("media_file")
         description = request.form.get("description")
         user_name = request.form.get("user_name")
         latitude = request.form.get("latitude")
         longitude = request.form.get("longitude")
+        
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            # Extract the original extension
+            original = secure_filename(file.filename)  # e.g. 'image.jpg'
+            ext = original.rsplit('.', 1)[1].lower()     # e.g. 'jpg'
+            
+            # Generate a unique filename
+            unique_name = f"{uuid.uuid4()}.{ext}"         # e.g. 'b51d8bb6-7f3c-4f0c-8291-2c3dbb34c9e0.jpg'
+            
+            # Save the file with the unique filename
+            file.save(os.path.join(UPLOAD_FOLDER, unique_name))
+            
+            # Create a new submission record
             new_submission = Submission(
-                filename=filename,
+                filename=unique_name,
                 description=description,
                 user_name=user_name,
                 latitude=latitude,
@@ -469,6 +481,14 @@ def index():
         custom_descriptions=custom_descriptions,
         csv_testimonies=csv_testimonies
     )
+
+    
+@app.route('/log_event', methods=['POST'])
+def log_event():
+    data = request.get_json()
+    logger.debug("Client event log: %s", data)
+    return '', 204  # No content
+
 
 # -------------------------
 # Run the App (for local testing)
