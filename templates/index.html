@@ -7,33 +7,602 @@
 </div>
 
 <!-- HERO/HEADER SECTION (Now using new class names) -->
-<div class="hero-banner p-5 mb-4 rounded-3">
-  <div class="container-fluid py-5 hero-text">
-    <h1 class="display-5 fw-bold">Princeton, Save Our Starry Skies</h1>
-    <p class="col-md-8 fs-4">
-      We are all healthier and safer under starry skies. Learn about the adverse effects of light pollution, and how you can help.
-    </p>
+<!-- HERO TEXT SECTION -->
+<div class="hero-text-container text-center p-5 mb-4">
+  <h1 class="display-5 fw-bold">Princeton, Save Our Starry Skies</h1>
+  <p class="col-md-8 fs-4">
+    We are all healthier and safer under starry skies. Learn about the adverse effects of light pollution, and how you
+    can help.
+  </p>
+</div>
+
+<!-- hero images grid -->
+<div class="hero-images-grid">
+  <!-- Left Column -->
+  <div class="hero-image-container left">
+    <img src="/static/images/banner_left.JPG" alt="Banner Left">
+  </div>
+
+  <!-- Right Column -->
+  <div class="hero-images-right">
+    <div class="hero-image-container">
+      <img src="/static/images/banner_right1.JPG" alt="Banner Right 1">
+    </div>
+    <div class="hero-image-container">
+      <img src="/static/images/banner_right2.jpg" alt="Banner Right 2">
+    </div>
   </div>
 </div>
 
+
+
+
+
+<section id="light-pollution-info" class="mb-5">
+  <div class="definition">
+    <h1 style="font-weight: bold;">What is Light Pollution?</h1>
+  </div>
+
+  <p class="definition-text" style="font-size: 1.6em;">Excessive, misdirected, or obtrusive
+    artificial lighting.</p>
+
+  <div class="negative-effects">
+    <h1 style="font-weight: bold;">What are the Negative Effects of Light Pollution?</h1>
+  </div>
+
+  <!-- 2-column wrapper using flex -->
+  <div class="lp-flex-container">
+
+    <!-- LEFT COLUMN: Health, Energy, Astronomy -->
+    <div class="lp-column">
+      <!-- CARD 1: HEALTH -->
+      <div class="info-card">
+        <h2 style="font-weight: bold;">
+          Health
+          <!-- <span class="vertical-pipe"></span>
+          <a href="health.html" class="learn-more">Learn More</a> -->
+        </h2>
+        <p style="font-size: 1.4em; font-weight: bold;">Artificial light at night can disrupt circadian rhythms and
+          impact human health.</p>
+        <p style="font-size: 1.2em;">Even dim ambient night-time light is harmful. Note that typical light trespass is
+          much brighter than the light of the full moon. Also note that the light of the full moon is only present for a
+          couple nights out of the month. Student testimonies indicate that light trespass is a significant issue at
+          Princeton.
+        </p>
+
+        <p class="effects">
+          <strong>Light Pollution Effects</strong><br>
+          <span class="effect-bullet">Depression</span>
+          <span class="effect-bullet">Diabetes</span>
+          <span class="effect-bullet">Obesity</span>
+          <span class="effect-bullet">Cancer</span>
+        </p>
+        <div class="image-stack">
+          <img src="/static/images/health1.png" alt="Health 1">
+          <img src="/static/images/health2.png" alt="Health 2">
+          <img src="/static/images/health3.png" alt="Health 3">
+        </div>
+      </div>
+
+      <!-- CARD 2: ENERGY -->
+      <div class="info-card">
+        <h2 style="font-weight: bold;">Energy</h2>
+        <p style="font-size: 1.4em; font-weight: bold;">Inefficient lighting wastes electricity and increases carbon
+          footprints.</p>
+        <p style="font-size: 1.2em;">USA alone wastes $3 billion / year lighting the sky (1/3rd of the annual budget of
+          the NSF, or 1/10th of NASA's budget).</p>
+        <p style="font-size: 1.2em;">Based on a survey of existing light fixtures on campus, their light levels
+          and their shielding, and the fact that they are on at all times during the night
+          (even when not needed), we estimate that the relevant electric bill of
+          Princeton University could be reduced by 75%.</p>
+        <p class="effects">
+          <strong>Light Pollution Effects</strong><br>
+          <span class="effect-bullet">Wasted Electricity</span>
+          <span class="effect-bullet">Increased Carbon Footprint</span>
+          <span class="effect-bullet">Excessive Cost</span>
+        </p>
+        <div class="image-stack">
+          <img src="/static/images/energy2.png" alt="Energy 2">
+          <p style="font-size: 1.2em;">Sustainability is one of Princeton's top priorities. <strong
+              style="color: #F8B525;">Light Pollution is missing from the list.</strong>
+          </p>
+          <img src="/static/images/energy1.png" alt="Energy 1">
+        </div>
+      </div>
+
+      <!-- CARD 3: ASTRONOMY -->
+      <div class="info-card">
+        <h2 style="font-weight: bold;">Education and Research</h2>
+        <p style="font-size: 1.4em; font-weight: bold;">Excessive night lighting washes out stars and hinders
+          astronomical research.</p>
+        <p style="font-size: 1.2em;">
+          AST205 “Planets in the Universe”: 2012 – 2023
+          Altogether ~1000 students involved.</p>
+        <p style="font-size: 1.2em;">Strong observational component with telescopes
+          and cameras. About 40 observing sessions per
+          semester.</p>
+        <p style="font-size: 1.2em;">Alumni return after a decade to our observing
+          sessions (aka star parties). One such event every
+          month.</p>
+        <p style="font-size: 1.2em;">Strong degradation of sky conditions over a
+          decade. Sky is getting very bright, and very few
+          places remain with no direct glare from fixtures.</p>
+        <p style="font-size: 1.2em;">Steeply increasing light pollution of Princeton is
+          paralyzing the teaching activities.</p>
+        <p style="font-size: 1.2em;">Princeton's sky is valued by many other "layers" of our population: alumni, famous
+          visitors, Nobel Prize winners, musicians.</p>
+        </p>
+        <p class="effects">
+          <strong>Light Pollution Effects</strong><br>
+          <span class="effect-bullet">Skyglow</span>
+          <span class="effect-bullet">Lost Detail</span>
+          <span class="effect-bullet">Impaired Observational Data</span>
+          <span class="effect-bullet">Teaching</span>
+        </p>
+        <div class="image-stack">
+          <img src="/static/images/astro1.png" alt="Astronomy 1">
+          <p style="font-size: 1.2em;">The roof of Peyton Hall: historically a place for class observations and star
+            parties.</p>
+          <!-- <img src="/static/images/astro2.png" alt="Astronomy 2"> -->
+          <!-- <img src="/static/images/astro3.png" alt="Astronomy 3">
+          <img src="/static/images/astro4.png" alt="Astronomy 4"> -->
+        </div>
+      </div>
+    </div> <!-- END LEFT COLUMN -->
+
+    <!-- RIGHT COLUMN: Safety, Ecosystems -->
+    <div class="lp-column">
+      <!-- CARD: SAFETY -->
+      <div class="info-card">
+        <h2 style="font-weight: bold;">Safety</h2>
+        <p style="font-size: 1.4em; font-weight: bold;">The concern is <strong style="color: #F8B525;">glare.</strong>
+        </p>
+        <p style="font-size: 1.2em;">Overly bright lighting causes glare, hampers vision, and can
+          create a false sense of security.</p>
+        <p class="effects">
+          <strong>Light Pollution Effects</strong><br>
+          <span class="effect-bullet">Poor Night Vision</span>
+          <span class="effect-bullet">Pedestrian Hazards</span>
+          <span class="effect-bullet">Driver Disorientation</span>
+          <span class="effect-bullet">False Sense of Security</span>
+        </p>
+        <div class="image-stack">
+          <img src="/static/images/safety1.png" alt="Safety 1">
+          <img src="/static/images/safety2.png" alt="Safety 2">
+          <img src="/static/images/safety3.png" alt="Safety 3">
+          <img src="/static/images/safety4.png" alt="Safety 4">
+          <p style="font-size: 1.2em;">This poor example for glare is on Ivy Lane, next to the EAS construction. The
+            "temporary" lights have been up for over a year. They shine mostly upward and blind pedestrians.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD: ECOSYSTEMS -->
+      <div class="info-card">
+        <h2 style="font-weight: bold;">Ecosystems</h2>
+        <p style="font-size: 1.4em; font-weight: bold;">Light pollution disrupts wildlife, affecting migration,
+          reproduction, and feeding cycles.</p>
+        <p style="font-size: 1.2em;">The disruption of ecosystems spans a wide range. A huge number of species are
+          affected (in)directly including insects, birds, and beavers.
+        </p>
+        <p style="font-size: 1.2em;">Princeton is surrounded by fragile ecosystems: D&R canal park, Stony Brook,
+          Millstone, Lake Carnegie, Wildlife corridors.
+        </p>
+        <p class="effects">
+          <strong>Light Pollution Effects</strong><br>
+          <span class="effect-bullet">Wildlife Disruption</span>
+          <span class="effect-bullet">Insect Apocalypse</span>
+          <span class="effect-bullet">Bird Migration Interference</span>
+        </p>
+        <div class="image-stack">
+          <img src="/static/images/ecosystems1.png" alt="Ecosystems 1">
+          <p style="font-size: 1.2em;">A recent example: some of our fragile ecosystem was lit up by unshielded "area" lights (Faculty Road). The field across the lake is now constantly illuminated.
+          </p>
+          <img src="/static/images/ecosystems2.png" alt="Ecosystems 2">
+          <p style="font-size: 1.2em;">Insect apocalypse under way: <strong style="color: #F8B525;">population dropped
+              to 45% due to light pollution.</strong>
+          </p>
+          <img src="/static/images/ecosystems3.png" alt="Ecosystems 3">
+        </div>
+      </div>
+    </div> <!-- END RIGHT COLUMN -->
+
+  </div> <!-- END lp-flex-container -->
+</section>
+
+
+<!-- research and references  -->
+<section id="resources" class="mb-5">
+  <div class="card resource-card">
+    <div class="card-body">
+      <h2 class="card-title">References and Resources</h2>
+
+      <div class="row">
+
+        <!-- LEFT COLUMN: Light Pollution in Princeton -->
+        <div class="col-md-6">
+          <h3>Light Pollution in Princeton</h3>
+          <ul class="resource-list">
+            <li>
+              <a href="https://www.astro.princeton.edu/~gbakos/lp/20250127_princeton_light_pollution.pdf"
+                target="_blank">
+                Presentation by Gaspar Bakos on light pollution (PDF)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.astro.princeton.edu/~gbakos/lp/20210301_lake_campus_lighting_report_gbakos_V02.pdf"
+                target="_blank">
+                Lake Campus Development and notes by Gaspar Bakos (PDF)
+              </a>
+            </li>
+            <li>
+              <a href="https://lighttrends.lightpollutionmap.info/#zoom=9&lon=-74.66753&lat=40.34350" target="_blank">
+                Light pollution map centered on Princeton (LightTrends)
+              </a>
+            </li>
+            <li>
+              <a href="https://darksitefinder.com/map/#8/40.244/-74.43" target="_blank">
+                Light pollution map centered on Princeton (Dark Sky Finder)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.lightpollutionmap.info/#zoom=10.24&lat=40.3359&lon=-74.6572&state=eyJiYXNlbWFwIjoiTGF5ZXJCaW5nUm9hZCIsIm92ZXJsYXkiOiJ3YV8yMDE1Iiwib3ZlcmxheWNvbG9yIjpmYWxzZSwib3ZlcmxheW9wYWNpdHkiOjYwLCJmZWF0dXJlc29wYWNpdHkiOjg1fQ=="
+                target="_blank">
+                Light pollution map info
+              </a>
+            </li>
+            <li>
+              <a href="https://www.astro.princeton.edu/~gbakos/lp/150120_Outdoor_Lighting_Master_Plan.pdf"
+                target="_blank">
+                Princeton's 2015 master lighting plan (PDF)
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- RIGHT COLUMN: General Light Pollution Resources -->
+        <div class="col-md-6">
+          <h3>General Light Pollution Resources</h3>
+          <ul class="resource-list">
+            <li>
+              <a href="https://www.darksky.org" target="_blank">
+                International Dark Sky Association
+              </a>
+            </li>
+            <li>
+              <a href="https://journalofethics.ama-assn.org/sites/joedb/files/2024-09/pfor1-peer-2410_0.pdf"
+                target="_blank">
+                We’re All Healthier Under a Starry Sky, Mario E. Motta, MD (PDF)
+              </a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/watch?v=FW0WZX75Nmo" target="_blank">
+                Dark Sacred Night | A Light Pollution Documentary (YouTube)
+              </a>
+            </li>
+            <li>
+              <a href="https://pub.njleg.state.nj.us/Bills/2024/S2000/1610_I1.PDF" target="_blank">
+                NJ outdoor lighting fixture bill S1610 | Zwicker, Mukherji (PDF)
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section id="summary" class="mb-5">
+  <div class="summary-header">
+    <h1 style="font-weight: bold;">Princeton's Situation</h1>
+  </div>
+  <p style="font-size: 1.5em;">Light pollution in Princeton is prevalent. Optimally situated
+    halfway between Philadelphia and New York, Princeton could show
+    starry skies above its campus. Sustainability, park-like night-time aesthetics have always been key considerations
+    in shaping the
+    appearance of our campus.
+  </p>
+
+  <div class="text-and-image">
+    <div class="text-side">
+      <p style="font-size: 1.5em;">
+        Yet, based on our sky background measurements, night-time photography, and satellite data, the sky above
+        Princeton has become about 3-times brighter from 2012 to 2024. The last view of the Milky Way was around 2000,
+        and
+        now we are losing even the brightest stars.
+      </p>
+    </div>
+    <div class="image-side">
+      <figure class="image-with-caption">
+        <img src="/static/images/princeton_situation1.png"
+          alt="Trend at Princeton over 10 years based on satellite data">
+        <figcaption>Trend at Princeton over 10 years based on satellite data</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="two-wide-images">
+    <figure class="two-wide-figure">
+      <div class="two-wide-images">
+        <img src="/static/images/astro3.png" alt="Unpolluted dark sky with the winter Milky Way">
+        <img src="/static/images/astro4.png" alt="Simulated night sky above Princeton">
+      </div>
+      <figcaption>
+        Illustrations of the effect of sky background increase on the visibility of the night sky. Left: an unpolluted
+        dark sky with the winter Milky Way. Right: Equivalent to the night sky above Princeton. Simulation by G. Bakos
+        using Stellarium.
+      </figcaption>
+    </figure>
+
+  </div>
+
+
+  <p style="font-size: 1.5em;">
+    Simple estimates show that Princeton could save about 75% of its lighting bill by properly shielded, timer and
+    motion-controlled, dimmable lighting fixtures.
+    A large fraction of AST205 students complain about light trespass in their dorm rooms, disrupting their sleep at
+    night. </p>
+
+</section>
+
 <!-- Student Testimonials using Flickity -->
+<!-- TESTIMONIALS GRID SECTION (2 rows x 4 columns each) -->
 <section id="testimonials" class="mb-5">
-  <h2>Student Testimonials</h2>
-  <!-- Flickity carousel container -->
-  <div class="testimonial-carousel" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false, "prevNextButtons": true }'>
-    {% for testimony in csv_testimonies %}
-    <div class="carousel-cell">
-      <div class="testimonial-card {% if testimony.grading_gb == '1' or testimony.grading_ak == '1' %}green-border{% endif %}">
-        <!-- Logo circle -->
+  <!-- Section Heading (optional) -->
+  <h2 style="text-align: left; color: #F8B525;">Student Testimonials</h2>
+
+  <!-- ====== ROW 1 TITLE ====== -->
+  <div class="row">
+    <div class="col-12">
+      <p style="font-size: 1.5em; color: white; font-weight: bold;">
+        Do you see a value in Princeton having a starry sky?
+      </p>
+    </div>
+  </div>
+
+  <!-- ====== ROW 1 (4 columns) ====== -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    <!-- CARD 1 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <!-- (Optional) Logo circle -->
         <div class="testimonial-logo">
           <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
         </div>
-        <!-- Header: first name + last initial, then class year -->
+        <!-- Header -->
+        <div class="testimonial-header">
+          <p class="grad-year">Student</p>
+          <p class="grad-year">Class of 2027</p>
+        </div>
+        <!-- Content (ONLY the answer, question is removed) -->
+        <div class="testimonial-content">
+          <p class="answer">
+            Looking up into a starry night sky on a clear night is a healing experience that cannot be replicated, and a
+            needed respite from a stressful campus. The night sky allows us to see back into eternity, and witness the
+            humbling scale of our own lives on a cosmic level, an experience that many find to be meditative. Taking
+            AST205, a class that heavily emphasizes visual observation of the night sky, I was able to see many
+            incredible sky objects that may no longer be visible due to increasing light pollution in the area. Walking
+            back to my dorm after studying or working is a rare time to reflect, a reflection that is often broken by
+            the harsh campus lighting spilling beyond areas where it is necessary. Princeton is a leader in many
+            environmental fields, including water management and building efficiency, it too should be bold in
+            protecting another natural treasure, the night sky.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <div class="testimonial-header">
+          <p class="grad-year">Student</p>
+          <p class="grad-year">Class of 2026</p>
+        </div>
+        <div class="testimonial-content">
+          <p class="answer">
+            Having a starry sky in Princeton is very important to me; not only did I grow up in Princeton in awe of the
+            sky, it sounds cliche, but looking at the stars at night helped me ground myself in the context of the
+            entire world while also allowing my mind and dreams to reach no bounds. As a student, it is inspiring for me
+            to be able to look up at the sky and reflect on my life, my studies, and what is important to me. I think
+            that recently, it has been increasingly harder to see the stars at night, which has been upsetting since the
+            stars are so important to my mental, academic, and spiritual health.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <div class="testimonial-header">
+          <p class="grad-year">Student</p>
+          <p class="grad-year">Class of 2026</p>
+        </div>
+        <div class="testimonial-content">
+          <p class="answer">
+            Princeton is known, among many things, for its beauty, and a starry sky is a very valuable part of that,
+            especially for our many students that come from populated urban areas where they can't see the stars. I
+            remember the first time my friend from Philadelphia went out to the golf course by Forbes and was amazed at
+            all the stars she could finally see. It's truly so transformative to see. It's also a point of cultural
+            heritage that we should work to preserve. Countless mythologies across cultures around the world are based
+            in the sense of magic held by the stars. They should be preserved as well as any historical or cultural
+            artifact dug up from the ground. Lastly, if the aesthetics and the cultural importance of the aesthetics of
+            a starry sky aren't enough — Princeton is first and foremost a research institution. It was my absolute
+            privilege to get to take a class with Prof. Bakos, a leading scholar in astrophysical sciences. It was
+            incredible to have the opportunity to study under someone who is actively discovering the exoplanets and
+            applying the methods we learn about as a leading researcher in this field. Light pollution on campus
+            actively harms not only the undergraduate (& community auditor) experience in this single class (which is
+            already a shame, because the observation nights, or "star parties," were the highlight of the class), but
+            also ruins opportunities for the extremely talented researchers at Princeton's Department of Astrophysical
+            Sciences to properly execute their research, further the collective knowledge of the field, and contribute
+            to the larger world of astrophysical sciences on Princeton's behalf. Surely it is clear that Princeton has
+            no reason besides ignorance, carelessness, and greed to not include the reduction of light pollution on
+            campus in its list of priorities. We were shown in class possible models of easy fixes to campus light
+            pollution, including models of street lighting that are not only better for the sky, but safer and healthier
+            for students. These models emphasize the reduction of glare when walking, increasing visibility for
+            pedestrians at night, as well as the reduction of excess light shining intrusively into students' dorms and
+            harming our sleep patterns. The solutions already exist and have been thought of in detail. Princeton has no
+            excuse to not implement them if they care about their students, their faculty researchers, and their
+            contribution to the preservation of cultural heritage.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <div class="testimonial-header">
+          <p class="grad-year">Alumni</p>
+          <p class="grad-year">Class of 2015</p>
+        </div>
+        <div class="testimonial-content">
+          <p class="answer">
+            As a student of philosophy, I took seriously Aristotle's exhortation to contemplate the celestial bodies as a part of the good life. So I took astronomy with Professor Bakos, and enjoyed it tremendously. Considering the universe, its stars (and their planets!), is awesome in the most literal sense: it provokes awe, wonderment, and a sublime sense, a humbling perspective, for how small we are. It's a tremendously valuable experience, and one that should be preserved for future generations of Princeton students.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Row 1 -->
+
+  <!-- ====== ROW 2 TITLE ====== -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <p style="font-size: 1.5em; color: white; font-weight: bold;">
+        Do you experience light pollution on campus?
+      </p>
+    </div>
+  </div>
+
+  <!-- ====== ROW 2 (4 columns) ====== -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    <!-- CARD 5 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <div class="testimonial-header">
+          <p class="grad-year">Student</p>
+          <p class="grad-year">Class of 2027</p>
+        </div>
+        <div class="testimonial-content">
+          <p class="answer">
+            I grew up in a dark place with few sources of artificial light, so attending Princeton was a significant
+            change. I have found my sleep being disrupted by harsh unshielded artificial lighting nearby my dorm room
+            (Forbes College) despite my room shades being fully drawn. As someone who is sensitive to light changes (I
+            wake with a sunrise clock for this reason) this is very challenging, requiring sleep aids such as melatonin
+            and eye masks. While walking around campus at night, I have also found the artificial lighting to often be
+            unnecessary and disruptive, with unused offices, classrooms, and construction sites shining brightly,
+            floodlights lighting up the sides of locked buildings, or casting light directly up into the sky. The sky
+            brightness from artificial lighting has even created a noteworthy haze on some occasions, visible as a
+            purple hue. This is not only a tremendous waste of energy, it is disruptive to the environment (such as to
+            migrating birds) and to student's circadian rhythms, adding to the stresses of a challenging campus.
+            Additionally, I have found it very difficult to see the stars and other astronomical phenomena from most
+            places on campus, another significant change from my home. For instance, when the Aurora Borealis was twice
+            visible from New Jersey for the first time in recent memory, student's enjoyment of the phenomena (a likely
+            once in a lifetime experience) was limited to witnessing color changes in the sky via camera phones, rather
+            than the full dancing lightshow that should have been visible to the naked eye in a less light polluted
+            environment. As a professional astrophotographer and amateur astronomer who is lucky enough to know the
+            difference between a polluted and unpolluted sky, I feel a profound sense of loss being separated from the
+            sky.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 6 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <div class="testimonial-header">
+          <p class="grad-year">Student</p>
+          <p class="grad-year">Class of 2026</p>
+        </div>
+        <div class="testimonial-content">
+          <p class="answer">
+            Yes, and it has disturbed me greatly as someone who has lived in Princeton since elementary school-- I find
+            it very agitating that there is so much light and light pollution on campus since it not only messes with my
+            circadian rhythm but also with my actual sleep. I have been a student on campus for three years now, and it
+            has been nearly impossible to fall asleep in all of my dorm rooms because a light has somehow always shone
+            through my window, making it difficult to fall asleep.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 7 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <div class="testimonial-header">
+          <p class="grad-year">Student</p>
+          <p class="grad-year">Class of 2026</p>
+        </div>
+        <div class="testimonial-content">
+          <p class="answer">
+            Light pollution has taken away a magical starry sky. Inefficient street lighting often causes glare that actually makes it harder to see when walking at night, the glare of each lamp jarring to the human eye attempting to adjust to a darker environment. The lights by every construction sight pointed inexplicably towards my eyes rather than towards the ground they're actually supposed to illuminate — as well as the ridiculously bright new screen in front of Frist Campus Center — are some of many examples of light pollution on campus. My freshman year dorm had a street lamp outside my window that never allowed the room to be fully dark, which is important for sleep. While I could have resolved this by closing the blinds, the blinds would then block the little sunlight I could get in the morning. Overall, it is clear that Princeton has not prioritized the ability to follow one's natural Circadian rhythms at all, and light pollution is a large part of it. Lastly — the stars are an incredible sight. Everyone deserves to see them. And Princeton has the means to offer everyone not only the opportunity for a top-class education, but also to experience the magic of a starry sky. For people from the city, they may not have seen the stars before, and they deserve to be able to. But also for people from rural areas with starrier skies, seeing the same starry sky can make them feel a little less homesick, which is something that many college students go through. I know that I feel a little better looking at Orion's belt and knowing that it's the same Orion's Belt I can see back home. But there are so many more stars in the sky than the ones we can see. When I took AST205, learning just how many stars are truly in the sky — not absent, but obscured — just made me sad. How much beauty are we missing due to carelessness?
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 8 -->
+    <div class="col">
+      <div class="testimonial-card">
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        <div class="testimonial-header">
+          <p class="grad-year">Alumni</p>
+          <p class="grad-year">Class of 2015</p>
+        </div>
+        <div class="testimonial-content">
+          <p class="answer">
+            Pollution sullies natural beauty. Light pollution is no exception to this rule. Needless light at night prevents us from gazing at the natural beauty of the cosmos. I remember even ten years ago having some difficulty getting away from the lights of campus. And returning to Princeton since, I've noticed more needless light at night---parking garages floodlit near once-barren spaces we used to go to observe other worlds. Now those worlds are shut off from view, veiled from our eyes of our own doing. This saddens me. I worry that current and future Princeton students won't be able to have the wonderful experiences that I had.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Row 2 -->
+
+
+  <!-- Flickity carousel container -->
+  <!-- <div class="testimonial-carousel"
+    data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false, "prevNextButtons": true }'>
+    {% for testimony in csv_testimonies %}
+    <div class="carousel-cell">
+      <div
+        class="testimonial-card {% if testimony.grading_gb == '1' or testimony.grading_ak == '1' %}green-border{% endif %}">
+        
+        <div class="testimonial-logo">
+          <img src="{{ url_for('static', filename='images/Princeton_seal.svg') }}" alt="Princeton Seal">
+        </div>
+        
         <div class="testimonial-header">
           <p class="grad-year">
-            {% if testimony.graduation_year|int <= 2024 %} Alumni {% elif testimony.graduation_year|int > 2014 %}
+            {% if testimony.graduation_year|int <= 2024 %} Alumni {% elif testimony.graduation_year|int> 2014 %}
               Student
-            {% endif %}
+              {% endif %}
           </p>
           {% if testimony.graduation_year %}
           <p class="grad-year">
@@ -41,7 +610,7 @@
           </p>
           {% endif %}
         </div>
-        <!-- Content: question and answer pairs -->
+        
         <div class="testimonial-content">
           <div class="question-answer">
             <p class="question">
@@ -59,63 +628,119 @@
       </div>
     </div>
     {% endfor %}
-  </div>
+  </div> -->
   <!-- Read More Testimonials Button -->
   <div class="text-center mt-3">
-    <a href="{{ url_for('testimonials_page') }}" class="btn btn-primary">Read All Testimonials</a>
+    <a href="https://www.astro.princeton.edu/~gbakos/AST205/testimonials.html" class="btn btn-primary">Read All
+      115 Testimonials</a>
   </div>
 </section>
 
 <!-- SECTION: Google Photos Album -->
-{% if google_photos_media %}
+{% if google_photos_good or google_photos_bad %}
+<!-- TWO-COLUMN GOOGLE PHOTOS ALBUMS -->
 <section id="google-photos" class="mb-5">
-  <h2>Google Photos Album</h2>
-  <!-- NEW SCROLLABLE WRAPPER (500px height + vertical scroll) -->
-  <div class="google-photos-container">
-    <div class="row">
-      {% for item in google_photos_media %}
-      <div class="col-md-4 mb-3">
-        <div class="card">
-          {% if "image" in item.mimeType %}
-          <a href="{{ item.baseUrl }}=w1600-h1200" class="glightbox" data-gallery="album" data-type="image"
-            data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
-            <!-- IMAGE THUMBNAIL: add 'media-thumbnail' -->
-            <img src="{{ item.baseUrl }}=w400-h300" alt="Google Photo" class="card-img-top media-thumbnail">
-          </a>
-          {% elif "video" in item.mimeType %}
-          <a href="{{ item.baseUrl }}=dv" class="glightbox" data-gallery="album" data-type="video"
-              data-title="{{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}">
-            <div class="card-img-top video-container">
-              <!-- Use an <img> for the thumbnail so it reliably loads -->
-              <img src="{{ item.baseUrl }}=w400-h300" alt="Video Thumbnail" class="media-thumbnail">
+  <div class="row">
+    <!-- Good Album Column -->
+    <div class="col-md-6">
+      <h3 style="color: #F8B525;">Star-Friendly Examples</h3>
+      {% if google_photos_good %}
+      <div class="google-photos-container" style="max-height:700px; overflow-y:auto;">
+        <div class="row">
+          {% for item in google_photos_good %}
+          <div class="col-md-6 mb-3">
+            <div class="card">
+              {% if "image" in item.mimeType %}
+              <a href="{{ item.baseUrl }}=w1600-h1200" class="glightbox" data-gallery="goodAlbum" data-type="image"
+                data-title="{{ custom_descriptions_good[item.id] if item.id in custom_descriptions_good else 'No description available' }}">
+                <img src="{{ item.baseUrl }}=w400-h300" alt="Google Photo" class="card-img-top media-thumbnail">
+              </a>
+              {% elif "video" in item.mimeType %}
+              <a href="{{ item.baseUrl }}=dv" class="glightbox" data-gallery="goodAlbum" data-type="video"
+                data-title="{{ custom_descriptions_good[item.id] if item.id in custom_descriptions_good else 'No description available' }}">
+                <div class="card-img-top video-container">
+                  <img src="{{ item.baseUrl }}=w400-h300" alt="Video Thumbnail" class="media-thumbnail">
+                </div>
+              </a>
+              {% endif %}
+              <div class="card-body">
+                <p class="card-text">
+                  {{ custom_descriptions_good[item.id] if item.id in custom_descriptions_good else 'No description
+                  available' }}
+                </p>
+                <!-- Edit Description Button/Form -->
+                <button class="btn btn-sm btn-outline-primary" onclick="toggleEditForm('{{ item.id }}-good')">
+                  Edit Description
+                </button>
+                <form method="POST" action="{{ url_for('update_description') }}" id="edit-form-{{ item.id }}-good"
+                  style="display: none; margin-top: 10px;">
+                  <input type="hidden" name="media_item_id" value="{{ item.id }}">
+                  <textarea name="description" class="form-control" rows="2"
+                    placeholder="Enter description">{{ custom_descriptions_good[item.id] if item.id in custom_descriptions_good else '' }}</textarea>
+                  <button type="submit" class="btn btn-sm btn-primary mt-2">Save</button>
+                </form>
+              </div>
             </div>
-          </a>
-          {% endif %}
-          <div class="card-body">
-            <p class="card-text" id="desc-{{ item.id }}">
-              {{ custom_descriptions[item.id] if item.id in custom_descriptions else 'No description available' }}
-            </p>
-            <button class="btn btn-sm btn-outline-primary" onclick="toggleEditForm('{{ item.id }}')">
-              Edit Description
-            </button>
-            <form method="POST" action="{{ url_for('update_description') }}" id="edit-form-{{ item.id }}"
-              style="display: none; margin-top: 10px;">
-              <input type="hidden" name="media_item_id" value="{{ item.id }}">
-              <textarea name="description" class="form-control" rows="2"
-                placeholder="Enter description">{{ custom_descriptions[item.id] if item.id in custom_descriptions else '' }}</textarea>
-              <button type="submit" class="btn btn-sm btn-primary mt-2">Save</button>
-            </form>
           </div>
-        </div>
-      </div>
-      {% endfor %}
-    </div> <!-- .row -->
-  </div>  <!-- .google-photos-container -->
+          {% endfor %}
+        </div> <!-- .row -->
+      </div> <!-- .google-photos-container -->
+      {% else %}
+      <p>No Good Examples Found or Not Authorized.</p>
+      {% endif %}
+    </div>
+
+    <!-- Bad Album Column -->
+    <div class="col-md-6">
+      <h3 style="color: #F8B525;">Light Pollution Hotspots</h3>
+      {% if google_photos_bad %}
+      <div class="google-photos-container" style="max-height:700px; overflow-y:auto;">
+        <div class="row">
+          {% for item in google_photos_bad %}
+          <div class="col-md-6 mb-3">
+            <div class="card">
+              {% if "image" in item.mimeType %}
+              <a href="{{ item.baseUrl }}=w1600-h1200" class="glightbox" data-gallery="badAlbum" data-type="image"
+                data-title="{{ custom_descriptions_bad[item.id] if item.id in custom_descriptions_bad else 'No description available' }}">
+                <img src="{{ item.baseUrl }}=w400-h300" alt="Google Photo" class="card-img-top media-thumbnail">
+              </a>
+              {% elif "video" in item.mimeType %}
+              <a href="{{ item.baseUrl }}=dv" class="glightbox" data-gallery="badAlbum" data-type="video"
+                data-title="{{ custom_descriptions_bad[item.id] if item.id in custom_descriptions_bad else 'No description available' }}">
+                <div class="card-img-top video-container">
+                  <img src="{{ item.baseUrl }}=w400-h300" alt="Video Thumbnail" class="media-thumbnail">
+                </div>
+              </a>
+              {% endif %}
+              <div class="card-body">
+                <p class="card-text">
+                  {{ custom_descriptions_bad[item.id] if item.id in custom_descriptions_bad else 'No description
+                  available' }}
+                </p>
+                <!-- Edit Description Button/Form -->
+                <button class="btn btn-sm btn-outline-primary" onclick="toggleEditForm('{{ item.id }}-bad')">
+                  Edit Description
+                </button>
+                <form method="POST" action="{{ url_for('update_description') }}" id="edit-form-{{ item.id }}-bad"
+                  style="display: none; margin-top: 10px;">
+                  <input type="hidden" name="media_item_id" value="{{ item.id }}">
+                  <textarea name="description" class="form-control" rows="2"
+                    placeholder="Enter description">{{ custom_descriptions_bad[item.id] if item.id in custom_descriptions_bad else '' }}</textarea>
+                  <button type="submit" class="btn btn-sm btn-primary mt-2">Save</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div> <!-- .row -->
+      </div> <!-- .google-photos-container -->
+      {% else %}
+      <p>No Bad Examples Found or Not Authorized.</p>
+      {% endif %}
+    </div>
+  </div> <!-- .row -->
 </section>
-{% else %}
-<section id="google-photos">
-  <p>No Google Photos available. Please <a href="{{ url_for('authorize') }}">authorize</a> the app to view your album.</p>
-</section>
+
 {% endif %}
 
 <!-- SECTION 3: CURATED PHOTOS & VIDEOS -->
@@ -146,8 +771,8 @@
 
 <!-- User Submissions Section -->
 <section id="user-submissions" class="mb-5">
-  <h2>Share Your Photos & Videos</h2>
-  <p>
+  <h2 style="text-align: left; color: #F8B525">Share Your Photos & Videos</h2>
+  <p style="text-align: left; font-size: 1.3em;">
     Help us document light pollution on campus by uploading your own photos or videos and tagging their location.
   </p>
   <div class="row">
@@ -161,12 +786,13 @@
             Choose File
           </label>
           <!-- Hidden file input with capture attribute -->
-          <input class="d-none" type="file" id="media_file" name="media_file" accept="image/*" capture="camera" required>
+          <input class="d-none" type="file" id="media_file" name="media_file" accept="image/*" capture="camera"
+            required>
           <!-- Thumbnail preview element (initially hidden) -->
           <img id="photo_thumbnail" src="" alt="Image Preview" style="display:none; max-width:100px; margin-top:10px;">
         </div>
-        
-        
+
+
 
         <!-- Image Description -->
         <div class="mb-3">
@@ -181,7 +807,7 @@
         </div>
         <!-- Location Picker -->
         <div class="mb-3">
-          <label for="location" class="form-label">Click on the map to select where the photo was taken.</label>
+          <!-- <label for="location" class="form-label">Click on the map to select where the photo was taken.</label> -->
           <!-- Map container for location selection -->
           <div id="map" style="height: 400px;"></div>
           <!-- Hidden fields to store latitude and longitude -->

@@ -422,17 +422,42 @@ def index():
         return redirect(url_for("index"))
     
     # GET request handling
-    google_photos_media = []
-    if get_user_credentials() is not None:
-        album_id = "AEVtP4D74JfzPzEtmKex0CU3WxAIgndiha9nunlApgNgznOBdRU3cFGPGiRhkvMLcJKgSYob9H2VQ4DfrMGzHnDylxATBSQOVA"
-        google_photos_media = fetch_album_items(album_id)
+    # google_photos_media = []
+    # if get_user_credentials() is not None:
+    #     album_id = "AEVtP4D74JfzPzEtmKex0CU3WxAIgndiha9nunlApgNgznOBdRU3cFGPGiRhkvMLcJKgSYob9H2VQ4DfrMGzHnDylxATBSQOVA"
+    #     google_photos_media = fetch_album_items(album_id)
     
-    custom_descriptions = {}
-    if google_photos_media:
-        for item in google_photos_media:
-            record = MediaDescription.query.filter_by(media_item_id=item['id']).first()
-            if record:
-                custom_descriptions[item['id']] = record.description
+    # custom_descriptions = {}
+    # if google_photos_media:
+    #     for item in google_photos_media:
+    #         record = MediaDescription.query.filter_by(media_item_id=item['id']).first()
+    #         if record:
+    #             custom_descriptions[item['id']] = record.description
+        # GET request handling
+    # Fetch items for two separate albums
+    google_photos_good = []
+    google_photos_bad = []
+
+    # Only fetch if we have valid credentials
+    if get_user_credentials() is not None:
+        GOOD_ALBUM_ID = "AEVtP4Da3o7nY9-ynMFYQ7YGOpBEdff2Me3tYeHrJJdB2l81rqHd96U5bA98JP6WGzKSYIbvuYp_9GNfUhbJ2vm3YTuhJap0zQ"
+        BAD_ALBUM_ID  = "AEVtP4D74JfzPzEtmKex0CU3WxAIgndiha9nunlApgNgznOBdRU3cFGPGiRhkvMLcJKgSYob9H2VQ4DfrMGzHnDylxATBSQOVA"
+
+        google_photos_good = fetch_album_items(GOOD_ALBUM_ID)
+        google_photos_bad  = fetch_album_items(BAD_ALBUM_ID)
+
+    # Build a dictionary of descriptions if needed
+    custom_descriptions_good = {}
+    for item in google_photos_good:
+        record = MediaDescription.query.filter_by(media_item_id=item['id']).first()
+        if record:
+            custom_descriptions_good[item['id']] = record.description
+
+    custom_descriptions_bad = {}
+    for item in google_photos_bad:
+        record = MediaDescription.query.filter_by(media_item_id=item['id']).first()
+        if record:
+            custom_descriptions_bad[item['id']] = record.description
     
     submissions = Submission.query.all()
     
@@ -477,8 +502,10 @@ def index():
         research_articles=research_articles,
         curated_media=curated_media,
         user_submissions=submissions,
-        google_photos_media=google_photos_media,
-        custom_descriptions=custom_descriptions,
+        google_photos_good=google_photos_good,
+        google_photos_bad=google_photos_bad,
+        custom_descriptions_good=custom_descriptions_good,
+        custom_descriptions_bad=custom_descriptions_bad,
         csv_testimonies=csv_testimonies
     )
 
@@ -488,6 +515,22 @@ def log_event():
     data = request.get_json()
     logger.debug("Client event log: %s", data)
     return '', 204  # No content
+
+
+@app.route('/delete_submission/<int:submission_id>', methods=['POST'])
+def delete_submission(submission_id):
+    submission = Submission.query.get(submission_id)
+    if submission:
+        # Optionally, delete the associated file
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], submission.filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        db.session.delete(submission)
+        db.session.commit()
+        flash("Submission deleted successfully!", "success")
+    else:
+        flash("Submission not found.", "error")
+    return redirect(url_for('index'))
 
 
 # -------------------------

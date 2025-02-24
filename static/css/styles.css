@@ -1,13 +1,21 @@
 /* Define CSS variables for the dark theme */
 :root {
-  --bg-color: #181818;           /* Very dark background */
-  --text-color: #e0e0e0;         /* Light text */
-  --accent-color: #bb86fc;       /* Accent color (purple) */
-  --card-bg: #212121;            /* Card background */
-  --card-border: #333333;        /* Card border */
-  --link-color: #bb86fc;         /* Link color */
-  --link-hover: #d6aefc;         /* Link hover color */
-  --navbar-bg: #1f1f1f;          /* Navbar background */
+  --bg-color: #181818;
+  /* Very dark background */
+  --text-color: #e0e0e0;
+  /* Light text */
+  --accent-color: #bb86fc;
+  /* Accent color (purple) */
+  --card-bg: #212121;
+  /* Card background */
+  --card-border: #333333;
+  /* Card border */
+  --link-color: #bb86fc;
+  /* Link color */
+  --link-hover: #d6aefc;
+  /* Link hover color */
+  --navbar-bg: #1f1f1f;
+  /* Navbar background */
 }
 
 /* Global styles */
@@ -21,6 +29,7 @@ body {
 a {
   color: var(--link-color);
 }
+
 a:hover {
   color: var(--link-hover);
   text-decoration: underline;
@@ -30,22 +39,24 @@ a:hover {
 .navbar {
   background-color: var(--navbar-bg) !important;
 }
+
 .navbar-brand,
 .navbar-nav .nav-link {
   color: var(--text-color) !important;
 }
 
 /* HERO SECTION */
-.hero-banner {
-  background-image: url("/static/images/banner1.PNG");
-  background-size: cover;
-  background-position: center center;
+/* .hero-banner {
+  background-image: url("/static/images/banner_left.JPG"), url("/static/images/banner_right.PNG");
+  background-size: auto 100%, auto 100%;
+  background-position: left center, right center;
   background-repeat: no-repeat;
   margin-top: 50px;
   position: relative;
   color: #F8B525;
   overflow: hidden;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+  min-height: 450px;
 }
 .hero-banner::before {
   content: "";
@@ -57,11 +68,99 @@ a:hover {
   background: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
-/* Use .hero-text to stack the h1 and p vertically */
 .hero-banner .hero-text {
   position: relative;
   z-index: 2;
+} */
+
+/* New Hero Section Styles */
+
+/* Hero Text Section: This styles the text container that appears above the images */
+.hero-text-container {
+  text-align: left !important;
+  /* Left-justified text */
+  padding: 0;
+  margin-bottom: 0;
+  color: #F8B525;
+  /* Yellow text */
 }
+
+
+/* Hero Images Container: Uses flexbox to arrange the two image blocks side by side */
+.hero-images-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  /* Adjust gap between images as needed */
+  margin-bottom: 2rem;
+}
+
+
+
+/* Lock the entire grid to 600px height and 2 columns. */
+.hero-images-grid {
+  width: 100%;
+  height: 600px;
+  /* Fixed vertical dimension */
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  /* Left col = 1 part, Right col = 2 parts */
+  gap: 1rem;
+  /* Horizontal gap between columns */
+  margin-bottom: 6rem;
+  overflow: hidden;
+  /* Hide any overflow if images exceed 600px */
+}
+
+/* Left column simply fills the full height of 600px. */
+.hero-image-container.left {
+  width: 100%;
+  height: 100%;
+  /* Fill the parent’s 600px height */
+  overflow: hidden;
+  /* Hide overflow if needed */
+}
+
+.hero-image-container.left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Crop rather than distort */
+  border-radius: 0.5rem;
+  display: block;
+}
+
+/* Right column is also 600px tall, but we use flex to stack images vertically. */
+.hero-images-right {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Fill the grid row’s 600px */
+  gap: 1rem;
+  /* Vertical gap between top and bottom images */
+  overflow: hidden;
+}
+
+/* Each child of the right column takes equal share of the 600px minus the gap. 
+   For a 1rem gap, use calc() so they evenly split the leftover space. */
+.hero-images-right .hero-image-container {
+  height: calc((100% - 1rem) / 2);
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Force each right image to fill its container. */
+.hero-images-right .hero-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  display: block;
+}
+
+
+
+
 
 /* --------------------------------------------------
    Testimonial Card Styles (New Design)
@@ -71,18 +170,29 @@ a:hover {
   margin-top: 100px;
 }
 
+#testimonials h2 {
+  margin-left: 0px;
+}
+
+
+
 /* Testimonial card container */
 .testimonial-card {
   position: relative;
-  height: 400px;                    /* Fixed height for every testimonial */
-  background-color: var(--card-bg);  /* Slightly lighter than the page background */
-  border: 1px solid #333;           /* Outer border */
-  border-top: 3px solid #626EE3;    /* 3px top border */
+  height: 400px;
+  /* Fixed height for every testimonial */
+  background-color: var(--card-bg);
+  /* Slightly lighter than the page background */
+  border: 1px solid #333;
+  /* Outer border */
+  border-top: 3px solid #626EE3;
+  /* 3px top border */
   border-radius: 10px;
   box-sizing: border-box;
-  margin: 40px 0px 20px;           /* Top margin allows space for the overlapping logo */
+  margin: 40px 0px 20px;
+  /* Top margin allows space for the overlapping logo */
   padding: 0 10px 10px 10px;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Logo circle that overlaps the card top */
@@ -140,11 +250,14 @@ a:hover {
 
 /* WebKit browsers (Chrome, Safari, etc.) */
 .testimonial-content::-webkit-scrollbar {
-  width: 8px; /* Adjust the width as needed */
+  width: 8px;
+  /* Adjust the width as needed */
 }
+
 .testimonial-content::-webkit-scrollbar-track {
-  background: transparent; 
+  background: transparent;
 }
+
 .testimonial-content::-webkit-scrollbar-thumb {
   background-color: var(--accent-color);
   border-radius: 10px;
@@ -154,6 +267,7 @@ a:hover {
 .question-answer {
   margin-bottom: 30px;
 }
+
 .question {
   font-weight: bold;
   font-size: 1.1em;
@@ -163,6 +277,7 @@ a:hover {
   margin-right: 5px;
   padding-bottom: 10px;
 }
+
 .answer {
   font-size: 1em;
   line-height: 1.5em;
@@ -178,13 +293,16 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .swiper-container.testimonials-carousel {
   width: 100%;
   overflow: hidden;
 }
+
 .swiper-slide {
   /* no manual width here */
 }
+
 .testimonial-card {
   width: 100%;
 }
@@ -197,6 +315,7 @@ a:hover {
   gap: 40px;
   margin-top: 20px;
 }
+
 .swiper-navigation .swiper-button-prev,
 .swiper-navigation .swiper-button-next {
   width: 45px;
@@ -206,29 +325,33 @@ a:hover {
   position: relative;
   z-index: 9999;
   cursor: pointer;
-  display: flex;         
-  align-items: center;    
+  display: flex;
+  align-items: center;
   justify-content: center;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
 .swiper-navigation .swiper-button-prev:hover,
 .swiper-navigation .swiper-button-next:hover {
   background-color: #888;
 }
+
 /* Pseudo-element for arrow icons */
 .swiper-button-prev::after,
 .swiper-button-next::after {
   content: "";
   display: block;
-  width: 24px; 
+  width: 24px;
   height: 24px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
 }
+
 .swiper-button-prev::after {
   background-image: url("/static/images/left_arrow.svg");
 }
+
 .swiper-button-next::after {
   background-image: url("/static/images/right_arrow.svg");
 }
@@ -247,6 +370,7 @@ a:hover {
   border: 1px solid #333;
   border-radius: 5px;
 }
+
 .testimonials-header {
   position: sticky;
   top: 0;
@@ -255,24 +379,29 @@ a:hover {
   padding: 0.5rem 1rem;
   border-bottom: 2px solid #333;
 }
+
 .titles-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0;
 }
+
 .testimonial-title {
   font-weight: bold;
   font-size: 1.1em;
   color: #e0e0e0;
 }
+
 .testimonials-content {
   padding-top: 1rem;
 }
+
 .testimonial-row {
   display: flex;
   gap: 1rem;
 }
+
 .testimonial-column {
   max-width: 500px;
   margin: 0 auto;
@@ -283,9 +412,11 @@ a:hover {
   box-sizing: border-box;
   color: var(--text-color);
 }
+
 .testimonial-column:last-child {
   margin-right: 0;
 }
+
 .testimonial-column p {
   margin: 0;
   white-space: pre-wrap;
@@ -298,11 +429,12 @@ a:hover {
   border-color: var(--card-border);
   color: #fff;
 }
+
 .btn.btn-primary:hover {
   background-color: #7C86E7;
   border-color: var(--card-border);
   text-decoration: none;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* --------------------------------------------------
@@ -313,6 +445,7 @@ a:hover {
   border: 1px solid var(--card-border);
   color: var(--text-color);
 }
+
 .card-body {
   color: var(--text-color);
 }
@@ -322,6 +455,7 @@ a:hover {
   background-color: var(--accent-color);
   border-color: var(--accent-color);
 }
+
 .btn-primary:hover {
   background-color: var(--link-hover);
   border-color: var(--link-hover);
@@ -351,6 +485,7 @@ a:hover {
   border: 1px solid #333;
   color: var(--text-color);
 }
+
 .form-control::placeholder {
   color: #888;
 }
@@ -362,44 +497,52 @@ a:hover {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: 10px;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   margin: 20px 0;
   overflow: hidden;
 }
+
 /* map inside of user submission cards */
 .user-submission-card a img {
-  width: 90%; 
+  width: 90%;
   height: auto;
   border-radius: 10px;
   display: block;
   margin: 10px auto 0;
 }
+
 #user-submissions .upload-section {
   padding-right: 20px;
   border-right: 1px solid #333;
 }
+
 #user-submissions .submissions-section {
   padding-left: 20px;
 }
+
 #user-submissions h2 {
   text-align: center;
   margin-bottom: 1rem;
   font-size: 2em;
   font-weight: normal;
 }
+
 #user-submissions h3 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.5em;
   font-weight: normal;
 }
-#user-submissions > h2 {
+
+#user-submissions>h2 {
   margin-top: 75px;
 }
-#user-submissions > p {
+
+#user-submissions>p {
   text-align: center;
   margin-bottom: 50px;
 }
+
 .form-text {
   color: #DFDFDF;
 }
@@ -409,10 +552,12 @@ a:hover {
   /* box-shadow: inset 0 0 7px 3px #63E396; */
   box-shadow: inset 0 0 7px 3px #F8B525;
 }
+
 /* Remove the blue top border if it has green-border */
 .testimonial-card.green-border {
   border-top: none !important;
 }
+
 /* Make the Student/Alumni label bigger and bolder */
 .grad-year {
   font-size: 1.3em;
@@ -421,30 +566,36 @@ a:hover {
 /* background stars animation */
 @keyframes move-background {
   from {
-      -webkit-transform: translate3d(0px, 0px, 0px);
-      transform: translate3d(0px, 0px, 0px);
+    -webkit-transform: translate3d(0px, 0px, 0px);
+    transform: translate3d(0px, 0px, 0px);
   }
+
   to {
-      -webkit-transform: translate3d(1000px, 0px, 0px);
-      transform: translate3d(1000px, 0px, 0px);
+    -webkit-transform: translate3d(1000px, 0px, 0px);
+    transform: translate3d(1000px, 0px, 0px);
   }
 }
+
 @-webkit-keyframes move-background {
   from {
-      -webkit-transform: translate3d(0px, 0px, 0px);
+    -webkit-transform: translate3d(0px, 0px, 0px);
   }
+
   to {
-      -webkit-transform: translate3d(1000px, 0px, 0px);
+    -webkit-transform: translate3d(1000px, 0px, 0px);
   }
 }
+
 @-moz-keyframes move-background {
   from {
-      -moz-transform: translate3d(0px, 0px, 0px);
+    -moz-transform: translate3d(0px, 0px, 0px);
   }
+
   to {
-      -moz-transform: translate3d(1000px, 0px, 0px);
+    -moz-transform: translate3d(1000px, 0px, 0px);
   }
 }
+
 .background-container {
   position: fixed;
   top: 0;
@@ -453,6 +604,7 @@ a:hover {
   right: 0;
   z-index: -1;
 }
+
 .stars {
   background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
   position: absolute;
@@ -463,6 +615,7 @@ a:hover {
   display: block;
   z-index: 0;
 }
+
 .twinkling {
   width: 10000px;
   height: 100%;
@@ -480,34 +633,208 @@ a:hover {
   animation: move-background 70s linear infinite;
 }
 
-/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-   ADD THE NEW CODE BELOW
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+/* light pollution information section */
+/* Light Pollution Info Section */
+#light-pollution-info {
+  margin-top: 2rem;
+  color: var(--text-color);
+}
+
+.definition {
+  color: #F8B525;
+}
+
+.summary-header {
+  color: #F8B525
+}
+
+.negative-effects {
+  color: #F8B525;
+}
+
+.definition-text {
+  margin-bottom: 80px;
+}
+
+.info-card h2 {
+  margin-bottom: 1rem;
+  display: inline-block;
+  color: #F8B525;
+  /* Same as banner color */
+  margin: 0.2rem 0.1rem;
+  padding: 0.25em 0.5em;
+  border: 1px solid #F8B525;
+  /* 1px red border */
+  border-radius: 5px;
+}
+
+
+/* Citation styling */
+.citation {
+  position: absolute;
+  bottom: 5px;   /* adjust as needed */
+  right: 5px;    /* adjust as needed */
+  font-size: 0.7em;  /* very small text */
+  font-style: italic;
+  color: #e0e0e0;  /* a light, academic color */
+  background: rgba(0, 0, 0, 0.5); /* optional: semi-transparent background for readability */
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+/* Vertical pipe between title and link */
+.vertical-pipe {
+  display: inline-block;
+  width: 1px;
+  height: 1em;            /* Approximately matches the text height */
+  background-color: #A9A9A9;  /* Same yellow as your banner */
+  margin: 0 0.5rem;       /* Adjust spacing as needed */
+  vertical-align: middle;
+}
+
+.learn-more {
+  text-decoration: none;
+  position: relative;
+  vertical-align: middle;
+  font-family: 'Open Sans', sans-serif;
+  /* or your chosen font */
+  color: #A9A9A9;
+  /* a neutral/dark gray text color */
+  font-size: 0.6em;
+  transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+/* Hover effect: slightly enlarge and increase font size */
+.learn-more:hover {
+  transform: scale(1.1);
+  font-size: 0.7em;
+}
+
+/* Container paragraph for the inline bullet list */
+.effects {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  /* Adjust font size as needed */
+  line-height: 1.5;
+}
+
+/* Each effect bullet */
+.effect-bullet {
+  display: inline-block;
+  padding: 0.3rem 0.4rem;
+  margin: 0.2rem 0.1rem;
+  border: 1px solid #FF6961;
+  /* 1px red border */
+  border-radius: 5px;
+  /* Rounded corners */
+  font-size: 0.9rem;
+  /* Slightly adjust the size if desired */
+  vertical-align: middle;
+}
+
+.lp-flex-container {
+  display: flex;
+  flex-wrap: nowrap;      /* Prevent wrapping */
+  gap: 20px;
+  max-width: 1280px;      /* Total width */
+  width: 100%;
+  margin: 2rem auto;      /* Center horizontally */
+}
+
+.lp-column {
+  flex: 0 0 50%;
+  min-width: 0;           /* Critical to prevent overflow due to large children */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+
+/* Each "info-card" is a box with a translucent background, some padding, etc. */
+.info-card {
+  background-color: rgba(42, 42, 42, 0.65);
+  /* translucent dark background */
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow: hidden;
+  /* in case images are slightly larger than the card */
+}
+
+/* The card's h2 can match your banner color if desired */
+.info-card h2 {
+  color: #F8B525;
+  /* same yellow as the banner */
+  margin-bottom: 0.75rem;
+}
+
+/* The paragraph text can be sized as you like */
+.info-card p {
+  font-size: 1rem;
+  /* or 1.1rem if you want it bigger */
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* The container holding images stacked vertically */
+.image-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  /* spacing between images */
+}
+
+/* Each image is forced to a max-height, preserving aspect ratio, with rounded corners */
+.image-stack img {
+  max-width: 100%;  /* Force images to shrink to the column’s width */
+  height: auto;      /* Preserve aspect ratio */
+  object-fit: cover; /* Or 'contain', if you want no cropping */
+  border-radius: 0.5rem;
+  display: block;
+}
+
+
+
+
+
+
+
 
 /* 1) Make the Google Photos container scrollable (500px tall).
    If you want to remove the inline style in your index.html,
    you can rely on this class alone. */
 .google-photos-container {
-  max-height: 700px;      /* fixed height */
-  overflow-y: auto;       /* scrollbar if rows exceed 500px */
+  max-height: 900px;
+  /* fixed height */
+  overflow-y: auto;
+  /* scrollbar if rows exceed 500px */
   /* make sure parent container fits all columns without horizontal scroll bar */
   padding-left: 15px;
   padding-right: 15px;
+}
+
+#google-photos h3 {
+  margin-left: 20px;
 }
 
 /* 2) Force all media thumbnails (images & videos) to fill
    the width and keep a uniform height. */
 .media-thumbnail {
   width: 100%;
-  height: 200px;          /* you can adjust this if you like */
-  object-fit: cover;      /* crop edges instead of squishing */
+  height: 200px;
+  /* you can adjust this if you like */
+  object-fit: cover;
+  /* crop edges instead of squishing */
 }
 
 /* 3) A container for videos to help position the overlay. */
 .video-container {
-  position: relative;     /* needed for absolutely-positioned overlay */
+  position: relative;
+  /* needed for absolutely-positioned overlay */
   width: 100%;
-  height: 200px;          /* same height as .media-thumbnail */
+  height: 200px;
+  /* same height as .media-thumbnail */
   overflow: hidden;
 }
 
@@ -517,9 +844,12 @@ a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 3rem;                   /* play symbol size */
-  color: rgba(255, 255, 255, 0.85);  /* white with transparency */
-  pointer-events: none;              /* clicks pass through to link */
+  font-size: 3rem;
+  /* play symbol size */
+  color: rgba(255, 255, 255, 0.85);
+  /* white with transparency */
+  pointer-events: none;
+  /* clicks pass through to link */
 }
 
 
@@ -533,37 +863,46 @@ a:hover {
 /* Ensure that each Flickity cell displays as desired */
 .carousel-cell {
   width: 100%;
-  padding: 0 10px; /* optional: adjust spacing between cells */
+  padding: 0 10px;
+  /* optional: adjust spacing between cells */
   box-sizing: border-box;
 }
 
 
- /* Flickity cell widths for testimonials */
+/* Flickity cell widths for testimonials */
 @media (min-width: 992px) {
   .testimonial-carousel .carousel-cell {
-    width: 33.33%; /* Three cells per view */
+    width: 33.33%;
+    /* Three cells per view */
   }
 }
+
 @media (min-width: 768px) and (max-width: 991px) {
   .testimonial-carousel .carousel-cell {
-    width: 50%; /* Two cells per view on tablet */
-  }
-}
-@media (max-width: 767px) {
-  .testimonial-carousel .carousel-cell {
-    width: 100%; /* One cell per view on mobile */
+    width: 50%;
+    /* Two cells per view on tablet */
   }
 }
 
 @media (max-width: 767px) {
+  .testimonial-carousel .carousel-cell {
+    width: 100%;
+    /* One cell per view on mobile */
+  }
+}
+
+@media (max-width: 767px) {
+
   /* Increase the bottom padding to provide extra space for the arrows */
   .testimonial-carousel {
-    padding-bottom: 100px; /* Adjust this value if needed */
+    padding-bottom: 100px;
+    /* Adjust this value if needed */
   }
-  
+
   /* Move the Flickity arrows further down on mobile */
   .flickity-prev-next-button {
-    bottom: 25px !important; /* Adjust this value as needed */
+    bottom: 25px !important;
+    /* Adjust this value as needed */
   }
 }
 
@@ -586,10 +925,11 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   /* Position the buttons below the carousel */
   top: auto !important;
-  bottom: 15px !important;  /* Increase negative value to push them further down */
+  bottom: 15px !important;
+  /* Increase negative value to push them further down */
   transform: none !important;
   /* Remove any button text */
   text-indent: -9999px;
@@ -597,10 +937,13 @@ a:hover {
 
 /* Position the left and right buttons as a centered pair */
 .flickity-prev-next-button.previous {
-  left: calc(50% - 60px);  /* Adjust horizontal offset as needed */
+  left: calc(50% - 60px);
+  /* Adjust horizontal offset as needed */
 }
+
 .flickity-prev-next-button.next {
-  right: calc(50% - 60px); /* Adjust horizontal offset as needed */
+  right: calc(50% - 60px);
+  /* Adjust horizontal offset as needed */
 }
 
 /* Change background color on hover */
@@ -623,6 +966,7 @@ a:hover {
 .flickity-prev-next-button.previous::before {
   background-image: url("/static/images/left_arrow.svg");
 }
+
 .flickity-prev-next-button.next::before {
   background-image: url("/static/images/right_arrow.svg");
 }
@@ -630,3 +974,164 @@ a:hover {
 .text-center.mt-3 {
   margin-top: -10px !important;
 }
+
+
+
+
+
+.text-and-image {
+  display: flex;
+  gap: 5rem;         /* Adjust gap between text and image */
+  align-items: center;  /* Vertically centers content */
+  flex-wrap: wrap;      /* Optional: Allows wrapping on smaller screens */
+  margin-bottom: 20px;
+}
+
+.text-and-image .text-side,
+.text-and-image .image-side {
+  flex: 0 0 45%;              /* Each side takes up equal space */
+  box-sizing: border-box;
+}
+
+.text-and-image .image-side img {
+  max-width: 100%;
+  height: auto;         /* Preserves aspect ratio */
+  display: block;
+}
+
+#summary {
+  max-width: 850px; /* Adjust this value to the desired width */
+  margin: 0 auto;   /* Centers the section horizontally */
+  padding: 0 1rem;  /* Optional: adds some horizontal padding on smaller screens */
+}
+
+.image-with-caption {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.image-with-caption figcaption {
+  font-size: 0.9em;  /* Adjust to desired small size */
+  color: #999;       /* A light gray or any color you prefer */
+  margin-top: 0.5em; /* Space between the image and caption */
+}
+
+.two-wide-images {
+  display: flex;
+  gap: 1rem;        /* Optional gap between images */
+  width: 100%;
+}
+
+.two-wide-images img {
+  width: 50%;
+  height: auto;     /* Keeps aspect ratio */
+  object-fit: cover;/* If you want them to cover the space */
+  display: block;
+}
+
+.two-wide-images figcaption {
+  font-size: 0.9em;  /* Adjust to desired small size */
+  color: #999;       /* A light gray or any color you prefer */
+  margin-top: 0.5em; /* Space between the image and caption */
+}
+
+
+/* research and references section */
+
+/* Resource Card Styles */
+.resource-card {
+  background-color: rgba(42, 42, 42, 0.8); /* Adjust opacity as needed */
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 0 auto;
+  max-width: 1300px;  /* Match the width of your hero-images-grid */
+}
+
+.resource-card .card-title {
+  color: #F8B525;  /* Accent yellow */
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+/* Resource List Styles */
+.resource-list {
+  list-style: none;  /* Remove default bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.resource-list li {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.resource-list a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.resource-list a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+
+
+/* mobile friendly edits */
+@media (max-width: 768px) {
+  /* HERO IMAGES: stack them on mobile */
+  .hero-images-grid {
+    display: block;      /* Switch from grid to block/flow layout */
+    height: auto;        /* Let images expand naturally */
+    margin-bottom: 2rem; /* A bit of spacing below */
+  }
+  .hero-image-container.left,
+  .hero-images-right {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  .hero-images-right {
+    display: block;
+  }
+
+  .hero-images-right .hero-image-container {
+    height: auto; 
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* LIGHT-POLLUTION CARDS: stack them all in a single column */
+  .lp-flex-container {
+    flex-wrap: wrap;
+  }
+  .lp-column {
+    flex: 0 0 100%;  /* each column now occupies full width */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .text-and-image {
+    flex-direction: column;    /* Stack vertically */
+    align-items: flex-start;   /* Left-align items instead of center */
+    gap: 1rem;                 /* A little breathing room */
+  }
+  .text-and-image .text-side,
+  .text-and-image .image-side {
+    flex: none;
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 768px) {
+  #google-photos .row .col-md-6:first-child {
+    margin-bottom: 1rem; 
+  }
+}
+

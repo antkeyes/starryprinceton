@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Light Pollution Awareness</title>
+  <title>Starry Princeton</title>
   <!-- Responsive viewport meta tag for mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -18,56 +18,35 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <!-- <link rel="preload" as="image" href="/static/images/banner_left.JPG">
+  <link rel="preload" as="image" href="/static/images/banner_right.PNG"> -->
+
 </head>
 
 <body>
   <!-- Invisible overlay on left edge to intercept iOS back-swipe gestures -->
   <div id="no-back" style="position: fixed; top: 0; left: 0; width: 20px; height: 100%; z-index: 10000;"></div>
   <script>
-    document.getElementById('no-back').addEventListener('touchstart', function(e) {
+    document.getElementById('no-back').addEventListener('touchstart', function (e) {
       e.preventDefault();
     });
-    document.getElementById('no-back').addEventListener('touchmove', function(e) {
+    document.getElementById('no-back').addEventListener('touchmove', function (e) {
       e.preventDefault();
     });
   </script>
 
-  <!-- BEGIN NAVBAR -->
-  <nav class="navbar navbar-expand-md navbar-dark" style="background-color: var(--navbar-bg);">
-    <div class="container-fluid">
-      <!-- Brand -->
-      <a class="navbar-brand" href="{{ url_for('index') }}">Starry Princeton</a>
-      <!-- Toggler for mobile -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-              aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="mainNavbar">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('index') }}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('testimonials_page') }}">Testimonials</a>
-          </li>
-          <!-- Add additional nav items as needed -->
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- END NAVBAR -->
 
   <!-- Main Content -->
   <div class="container my-4">
     {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <div class="alert alert-info" role="alert">
-          {% for msg in messages %}
-            <div>{{ msg }}</div>
-          {% endfor %}
-        </div>
-      {% endif %}
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+      {% for msg in messages %}
+      <div>{{ msg }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
   </div>
@@ -115,26 +94,27 @@
             timestamp: Date.now()
           })
         })
-        .then(response => response.text())
-        .then(text => console.log('log_event response:', text))
-        .catch(err => console.error('log_event error:', err));
+          .then(response => response.text())
+          .then(text => console.log('log_event response:', text))
+          .catch(err => console.error('log_event error:', err));
       });
 
       // Recalculate Flickity layout on window resize for smoother transitions
-      window.addEventListener('resize', function() {
+      window.addEventListener('resize', function () {
         flkty.resize();
       });
     });
   </script>
 
   <!-- Google Maps API -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzOZrj3M3hse4aBLL4sZrFnelsVdz12HQ&callback=initMap"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzOZrj3M3hse4aBLL4sZrFnelsVdz12HQ&callback=initMap"></script>
   <script>
     let map, marker;
     function initMap() {
       const princeton = { lat: 40.348, lng: -74.659 };
       map = new google.maps.Map(document.getElementById('map'), { center: princeton, zoom: 16 });
-      map.addListener('click', function(e) {
+      map.addListener('click', function (e) {
         placeMarker(e.latLng);
       });
     }
@@ -158,9 +138,9 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ event: 'beforeunload', timestamp: Date.now() })
       })
-      .then(response => response.text())
-      .then(text => console.log('beforeunload log_event response:', text))
-      .catch(err => console.error('beforeunload log_event error:', err));
+        .then(response => response.text())
+        .then(text => console.log('beforeunload log_event response:', text))
+        .catch(err => console.error('beforeunload log_event error:', err));
     });
   </script>
 
@@ -175,10 +155,10 @@
   <!-- Updated Geolocation Script:
        On successful geolocation, store lat/lng and hide the map container -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
-          function(position) {
+          function (position) {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
             document.getElementById("latitude").value = lat;
@@ -189,7 +169,7 @@
               mapElement.style.display = "none";
             }
           },
-          function(error) {
+          function (error) {
             console.error(error);
             // Optionally handle the error or let users pick their location on the map
             var mapElement = document.getElementById("map");
@@ -201,12 +181,12 @@
       }
     });
   </script>
-  
+
   <!-- File Input Customization & Thumbnail Preview Script:
        - Change label text based on device (using user agent) so that desktop always shows "Choose File"
        - Show a thumbnail preview of the selected/taken image -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const mediaLabel = document.getElementById('media_file_label');
       // Check if the device is mobile using the user agent
       const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -217,7 +197,7 @@
       // If the file input exists, add an event listener to show thumbnail preview
       const fileInput = document.getElementById('media_file');
       if (fileInput) {
-        fileInput.addEventListener('change', function(event) {
+        fileInput.addEventListener('change', function (event) {
           const file = event.target.files[0];
           if (file) {
             const thumbnail = document.getElementById('photo_thumbnail');
@@ -230,7 +210,22 @@
       }
     });
   </script>
-  
+
+  <script>
+    function toggleEditForm(idSuffix) {
+      // Build the full ID using the passed suffix.
+      var form = document.getElementById('edit-form-' + idSuffix);
+      if (form) {
+        if (form.style.display === 'none' || form.style.display === '') {
+          form.style.display = 'block';
+        } else {
+          form.style.display = 'none';
+        }
+      }
+    }
+  </script>
+
+
 </body>
 
 </html>
